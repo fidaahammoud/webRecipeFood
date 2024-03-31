@@ -1,18 +1,18 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
-import EditEventPage from './pages/EditEvent';
 import ErrorPage from './pages/Error';
-import EventDetailPage, {
-  loader as eventDetailLoader,
-  action as deleteEventAction,
-} from './pages/EventDetail';
-import EventsPage, { loader as eventsLoader } from './pages/Events';
-import EventsRootLayout from './pages/EventsRoot';
+
+
+import RecipesPage, { loader as recipesLoader } from './pages/Recipes';
+import RecipeDetailPage, { loader as recipeDeatailsLoader } from './pages/RecipeDetails';
+
+import CategoriesPage, { loader as categoriesLoader } from './pages/Categories';
+import CategoryDetailPage, { loader as categoryDetailsLoader } from './pages/CategoryDetail';
+
+
 import HomePage from './pages/Home';
-import NewEventPage from './pages/NewEvent';
 import RootLayout from './pages/Root';
-import { action as manipulateEventAction } from './components/EventForm';
-import NewsletterPage, { action as newsletterAction } from './pages/Newsletter';
+
 
 const router = createBrowserRouter([
   {
@@ -20,45 +20,39 @@ const router = createBrowserRouter([
     element: <RootLayout />,
     errorElement: <ErrorPage />,
     children: [
-      { index: true, element: <HomePage /> },
-      {
-        path: 'events',
-        element: <EventsRootLayout />,
-        children: [
-          {
-            index: true,
-            element: <EventsPage />,
-            loader: eventsLoader,
-          },
-          {
-            path: ':eventId',
-            id: 'event-detail',
-            loader: eventDetailLoader,
-            children: [
-              {
-                index: true,
-                element: <EventDetailPage />,
-                action: deleteEventAction,
-              },
-              {
-                path: 'edit',
-                element: <EditEventPage />,
-                action: manipulateEventAction,
-              },
-            ],
-          },
-          {
-            path: 'new',
-            element: <NewEventPage />,
-            action: manipulateEventAction,
-          },
-        ],
+      { 
+        index: true, element: <HomePage /> 
       },
+
       {
-        path: 'newsletter',
-        element: <NewsletterPage />,
-        action: newsletterAction,
+        path: 'recipes',
+        element: <RecipesPage />,
+        loader: recipesLoader,
       },
+      
+      {
+        path: 'recipes/:recipeId',
+        id: 'recipe-detail',
+        element: <RecipeDetailPage />,
+        loader: recipeDeatailsLoader,
+      },
+
+      {
+        path: 'categories',
+        element: <CategoriesPage />,
+        loader: categoriesLoader,
+      },
+
+      {
+        path: 'categories/:categoryId',
+        id: 'category-detail',
+        element: <CategoryDetailPage />,
+        loader: categoryDetailsLoader,
+      }
+      
+     
+      
+
     ],
   },
 ]);

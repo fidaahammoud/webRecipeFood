@@ -3,7 +3,7 @@ import PageContent from '../components/PageContent';
 function HomePage() {
   return (
     <PageContent title="Welcome!">
-      <p>Browse all our amazing events!</p>
+      <p>Nutritionally balanced, easy to cook recipes. Quality fresh local ingredients.</p>
     </PageContent>
   );
 }
