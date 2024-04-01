@@ -33,12 +33,34 @@ function MainNavigation() {
 
           <li>
             <NavLink
+              to="/chefs"
+              className={({ isActive }) =>
+                isActive ? classes.active : undefined
+              }
+            >
+              Chefs
+            </NavLink>
+          </li>
+
+          <li>
+            <NavLink
               to="/categories"
               className={({ isActive }) =>
                 isActive ? classes.active : undefined
               }
             >
               Categories
+            </NavLink>
+          </li>
+
+          <li>
+            <NavLink
+              to="/auth"
+              className={({ isActive }) =>
+                isActive ? classes.active : undefined
+              }
+            >
+              Authorization
             </NavLink>
           </li>
         </ul>

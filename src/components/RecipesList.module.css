@@ -96,3 +96,17 @@
   color: gray;
   margin-top: 5px;
 }
+
+.title {
+  width: 100%;
+  text-align: center;
+}
+.creatorLink {
+  text-decoration: none;
+  color: inherit;
+}
+
+.recipeLink {
+  text-decoration: none;
+  color: inherit;
+}

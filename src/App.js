@@ -12,7 +12,12 @@ import CategoryDetailPage, { loader as categoryDetailsLoader } from './pages/Cat
 
 import HomePage from './pages/Home';
 import RootLayout from './pages/Root';
+import ChefsPage, { loader as chefsLoader } from './pages/Chefs';
+import ChefDetailPage, { loader as chefDetailLoader } from './pages/ChefDetail';
+import AuthenticationPage from './pages/Authentication';
 
+
+import CompleteAuth from './pages/CompleteAuth';
 
 const router = createBrowserRouter([
   {
@@ -48,11 +53,29 @@ const router = createBrowserRouter([
         id: 'category-detail',
         element: <CategoryDetailPage />,
         loader: categoryDetailsLoader,
-      }
+      },
       
-     
-      
+      {
+        path: 'chefs',
+        element: <ChefsPage />,
+        loader: chefsLoader,
+      },
 
+      {
+        path: 'chefs/:chefId',
+        id: 'chef-detail',
+        element: <ChefDetailPage />,
+        loader: chefDetailLoader,
+      },
+
+      {
+        path: 'auth',
+        element: <AuthenticationPage />
+      },
+      {
+        path: 'auth/additional-details',
+        element: <CompleteAuth />, 
+      },
     ],
   },
 ]);

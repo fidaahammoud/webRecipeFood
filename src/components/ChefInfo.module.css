@@ -1,0 +1,50 @@
+.container {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    background-color: #2c2828;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .imageContainer {
+    flex: 0 0 auto;
+    margin-right: 20px;
+  }
+  
+  .image {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .details {
+    flex: 1;
+  }
+  
+  .name {
+    font-size: 24px;
+    margin-bottom: 5px;
+    color:  #f5e0e0;;
+
+  }
+  
+  .username {
+    font-size: 16px;
+    color:  #f5e0e0;;  }
+  
+  .bio {
+    font-size: 18px;
+    margin-top: 10px;
+    color:  #f5e0e0;;  }
+
+
+ 
+  
+  .totalFollowers {
+    font-size: 16px;
+    color: #b6b0b0;
+  }
+  
