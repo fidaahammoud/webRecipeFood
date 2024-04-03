@@ -1,20 +1,16 @@
 import React from 'react';
-import { Form, Link } from 'react-router-dom';
+import { Form, Link ,useNavigation,useActionData} from 'react-router-dom';
 import classes from './AdditionalDetailsForm.module.css';
 
 function AdditionalDetailsForm() {
   const params = new URLSearchParams(window.location.search);
-  const email = params.get('email');
-  const password = params.get('password');
+  const data = useActionData(); 
+  const navigation = useNavigation(); 
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // Handle form submission (e.g., send data to backend)
-  };
 
   return (
     <>
-      <Form method='post' onSubmit={handleSubmit} className={classes.form}>
+      <Form method='post'  className={classes.form}>
         <h1>Provide Additional Details</h1>
         <p>
           <label htmlFor="username">Username</label>

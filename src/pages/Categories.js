@@ -20,7 +20,7 @@ export default CategoriesPage;
 
 async function loadCategories() {
   const response = await fetch("http://192.168.56.10:80/laravel/api/categories");
-
+  console.log(response)
   if (!response.ok) {
     throw json(
       { message: 'Could not fetch categories.' },

@@ -14,10 +14,11 @@ import HomePage from './pages/Home';
 import RootLayout from './pages/Root';
 import ChefsPage, { loader as chefsLoader } from './pages/Chefs';
 import ChefDetailPage, { loader as chefDetailLoader } from './pages/ChefDetail';
-import AuthenticationPage from './pages/Authentication';
+import AuthenticationPage, { action as authAction } from './pages/Authentication';
+
+import CompleteAuth, { action as completeAuthAction } from './pages/CompleteAuth';
 
 
-import CompleteAuth from './pages/CompleteAuth';
 
 const router = createBrowserRouter([
   {
@@ -70,11 +71,14 @@ const router = createBrowserRouter([
 
       {
         path: 'auth',
-        element: <AuthenticationPage />
+        element: <AuthenticationPage />,
+        action: authAction
+
       },
       {
         path: 'auth/additional-details',
-        element: <CompleteAuth />, 
+        element: <CompleteAuth />,
+        action: completeAuthAction, 
       },
     ],
   },

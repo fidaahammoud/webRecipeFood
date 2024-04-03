@@ -1,43 +1,33 @@
 import React from 'react';
-import { Form, Link, useNavigate,useSearchParams } from 'react-router-dom';
+import {
+  Form,
+  Link,
+  useSearchParams,
+  useActionData,
+  useNavigation,
+} from 'react-router-dom';
 import classes from './AuthForm.module.css';
 
 function AuthForm() {
+  const data = useActionData(); 
+  const navigation = useNavigation(); 
+
   const [searchParams] = useSearchParams();
   const isLogin = searchParams.get('mode') === 'login';
-  const navigate = useNavigate(); // Use useNavigate for programmatic navigation
-
-  const handleSubmit = async (event) => {
-    event.preventDefault(); // Prevent default form submission
-
-    // Implement form data handling and validation (replace with your logic)
-    const formData = new FormData(event.target);
-    const email = formData.get('email');
-    const password = formData.get('password');
-
-    if (isLogin) {
-      // Login logic (replace with your authentication method)
-      console.log('Logging in...', email, password); // Example (replace with actual login)
-      navigate('/'); // Assuming '/' is the home page after successful login
-    } else {
-      // Create account logic (replace with your user creation method)
-      const confirmPassword = formData.get('confirmPassword');
-      if (password !== confirmPassword) {
-        // Handle password mismatch error
-        console.error('Passwords do not match');
-        return;
-      }
-      console.log('Creating account...', email, password); // Example (replace with actual account creation)
-      navigate('/auth/additional-details'); // Navigate to 'additional-details' after successful account creation
-    }
-  };
-
-  const buttonText = isLogin ? 'Log in' : 'Continue';
+  const isSubmitting = navigation.state === 'submitting';
 
   return (
     <>
-      <Form method="post" className={classes.form} onSubmit={handleSubmit}>
+      <Form method="post" className={classes.form}>
         <h1>{isLogin ? 'Log in' : 'Create a new user'}</h1>
+        {data && data.errors && (
+          <ul>
+            {Object.values(data.errors).map((err) => (
+              <li key={err}>{err}</li>
+            ))}
+          </ul>
+        )}
+        {data && data.message && <p>{data.message}</p>}
         <p>
           <label htmlFor="email">Email</label>
           <input id="email" type="email" name="email" required />
@@ -49,14 +39,21 @@ function AuthForm() {
         {!isLogin && (
           <p>
             <label htmlFor="confirmPassword">Confirm Password</label>
-            <input id="confirmPassword" type="password" name="confirmPassword" required />
+            <input
+              id="confirmPassword"
+              type="password"
+              name="confirmPassword"
+              required
+            />
           </p>
         )}
         <div className={classes.actions}>
-          <Link to={`?mode=${isLogin ? 'signup' : 'login'}`}>
-            {isLogin ? 'Create new user' : 'Log in'}
+          <Link to={`?mode=${isLogin ? 'register' : 'login'}`}>
+            {isLogin ? 'Create new user' : 'Login'}
           </Link>
-          <button type="submit">{buttonText}</button>
+          <button type="submit" disabled={isSubmitting}>
+            {isSubmitting ? 'Submitting...' : 'Save'}
+          </button>
         </div>
       </Form>
     </>
