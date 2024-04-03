@@ -1,4 +1,4 @@
-import classes from './RecipeItem.module.css';
+import classes from '../css/RecipeItem.module.css';
 
 function RecipeItem({ recipe }) {
     return (

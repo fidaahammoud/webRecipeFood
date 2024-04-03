@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form, Link ,useNavigation,useActionData} from 'react-router-dom';
-import classes from './AdditionalDetailsForm.module.css';
+import classes from '../css/AdditionalDetailsForm.module.css';
 
 function AdditionalDetailsForm() {
   const params = new URLSearchParams(window.location.search);

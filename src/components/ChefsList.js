@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import classes from './ChefsList.module.css';
+import classes from '../css/ChefsList.module.css';
 
 function ChefsList({ chefs }) {
   return (

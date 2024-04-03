@@ -1,4 +1,4 @@
-import classes from './ChefInfo.module.css';
+import classes from '../css/ChefInfo.module.css';
 
 function ChefInfo({ chef }) {
   return (

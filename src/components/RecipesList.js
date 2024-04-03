@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import classes from './RecipesList.module.css';
+import classes from '../css/RecipesList.module.css';
 
 function RecipesList({ recipes }) {
   return (

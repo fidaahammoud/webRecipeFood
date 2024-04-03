@@ -9,7 +9,6 @@ export default AuthenticationPage;
 
 export async function action({ request }) {
   console.log("data");
-
   try {
     const searchParams = new URL(request.url).searchParams;
     const mode = searchParams.get('mode') || 'register';
@@ -25,8 +24,10 @@ export async function action({ request }) {
       password: data.get('password'),
       password_confirmation: data.get('confirmPassword'),
     };
-    console.log(mode);
-    const response = await fetch("http://192.168.56.10:80/laravel/api/"+ mode, {
+    const API_HOST = process.env.REACT_APP_API_URL;
+    const url = API_HOST +"/" + mode;
+    console.log("URL : "+ url);
+    const response = await fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

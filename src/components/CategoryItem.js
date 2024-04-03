@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import classes from './CategoryItem.module.css';
+import classes from '../css/CategoryItem.module.css';
 
 function CategoryItem({ category }) {
   return (

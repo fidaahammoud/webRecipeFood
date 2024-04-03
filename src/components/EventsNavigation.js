@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 
-import classes from './EventsNavigation.module.css';
+import classes from '../css/EventsNavigation.module.css';
 
 function EventsNavigation() {
   return (
