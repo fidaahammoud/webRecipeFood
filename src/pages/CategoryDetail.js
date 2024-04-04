@@ -10,6 +10,10 @@ import {
 
 import CategoryItem from '../components/CategoryItem';
 
+import HttpService from '../components/HttpService';
+
+const httpService = new HttpService();
+
 function CategoryDetailPage() {
     
   const { category } = useRouteLoaderData('category-detail');
@@ -28,19 +32,27 @@ function CategoryDetailPage() {
 export default CategoryDetailPage;
 
 async function loadCategory(id) {
-  const response = await fetch("http://192.168.56.10:80/laravel/api/categories/" + id);
 
-  if (!response.ok) {
-    throw json(
-      { message: 'Could not fetch details for selected recipe.' },
-      {
-        status: 500,
-      }
-    );
-  } else {
-    const resData = await response.json();
-    return resData;
-  }
+
+  const API_HOST = process.env.REACT_APP_API_URL;
+  const url = API_HOST+"/categories/"+id;
+  console.log(url);
+  const response = await httpService.get(url,null);
+  return response;
+
+  // const response = await fetch("http://192.168.56.10:80/laravel/api/categories/" + id);
+
+  // if (!response.ok) {
+  //   throw json(
+  //     { message: 'Could not fetch details for selected recipe.' },
+  //     {
+  //       status: 500,
+  //     }
+  //   );
+  // } else {
+  //   const resData = await response.json();
+  //   return resData;
+  // }
 }
 
 

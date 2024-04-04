@@ -1,6 +1,10 @@
 import { json, redirect } from 'react-router-dom';
 import AuthForm from '../components/AuthForm';
 
+import HttpService from '../components/HttpService';
+
+const httpService = new HttpService();
+
 function AuthenticationPage() {
   return <AuthForm />;
 }
@@ -27,29 +31,32 @@ export async function action({ request }) {
     const API_HOST = process.env.REACT_APP_API_URL;
     const url = API_HOST +"/" + mode;
     console.log("URL : "+ url);
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(authData), 
-    });
-    console.log('API Response:', response);
 
-    const responseData = await response.json();
-    console.log('API Response Data:', responseData);
+    const response = await httpService.post(url,authData,null);
+    //const responseData = await response.json();
+    // const response = await fetch(url, {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify(authData), 
+    // });
+    // console.log('API Response:', response);
 
-    if (response.status === 422 || response.status === 401) {
-      return response;
-    }
+    // const responseData = await response.json();
+    // console.log('API Response Data:', responseData);
 
-    if (!response.ok) {
-      throw json({ message: 'Could not authenticate user.' }, { status: 500 });
-    }
+    // if (response.status === 422 || response.status === 401) {
+    //   return response;
+    // }
 
-    // Save token to localStorage
-    localStorage.setItem('token', responseData.access_token);
-    localStorage.setItem('userId', responseData.data.id);
+    // if (!response.ok) {
+    //   throw json({ message: 'Could not authenticate user.' }, { status: 500 });
+    // }
+
+   
+    localStorage.setItem('token', response.access_token);
+    localStorage.setItem('userId', response.data.id);
 
     if (mode === "register") {
       return redirect('/auth/additional-details');

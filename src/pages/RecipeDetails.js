@@ -10,6 +10,10 @@ import {
 
 import RecipeItem from '../components/RecipeItem';
 
+import HttpService from '../components/HttpService';
+
+const httpService = new HttpService();
+
 function RecipeDetailPage() {
     
   const { recipe } = useRouteLoaderData('recipe-detail');
@@ -28,19 +32,27 @@ function RecipeDetailPage() {
 export default RecipeDetailPage;
 
 async function loadRecipe(id) {
-  const response = await fetch("http://192.168.56.10:80/laravel/api/recipes/" + id);
+  
+  const API_HOST = process.env.REACT_APP_API_URL;
+  const url = API_HOST+"/recipes/"+id;
+  const response = await httpService.get(url,null);
+  return response;
 
-  if (!response.ok) {
-    throw json(
-      { message: 'Could not fetch details for selected recipe.' },
-      {
-        status: 500,
-      }
-    );
-  } else {
-    const resData = await response.json();
-    return resData;
-  }
+
+  //const response = await fetch("http://192.168.56.10:80/laravel/api/recipes/" + id);
+
+
+  // if (!response.ok) {
+  //   throw json(
+  //     { message: 'Could not fetch details for selected recipe.' },
+  //     {
+  //       status: 500,
+  //     }
+  //   );
+  // } else {
+  //   const resData = await response.json();
+  //   return resData;
+  // }
 }
 
 

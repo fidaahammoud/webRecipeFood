@@ -10,6 +10,9 @@ import {
 import ChefInfo from '../components/ChefInfo';
 import RecipesList from '../components/RecipesList';
 
+import HttpService from '../components/HttpService';
+
+const httpService = new HttpService();
 
 function ChefDetailPage() {
   const { chef, recipes } = useRouteLoaderData("chef-detail");
@@ -34,15 +37,22 @@ export default ChefDetailPage;
 
 
 async function loadChefInfo(chefId) {
-  const response = await fetch(`http://192.168.56.10:80/laravel/api/users/${chefId}`);
-  if (!response.ok) {
-    throw json(
-      { message: 'Could not fetch details for selected chef.' },
-      { status: 500 }
-    );
-  }
-  const resData = await response.json();
-  return resData;
+ 
+  const API_HOST = process.env.REACT_APP_API_URL;
+  const url = API_HOST+"/users/"+chefId;
+
+  const response = await httpService.get(url,null);
+  return response;
+
+  // const response = await fetch(`http://192.168.56.10:80/laravel/api/users/${chefId}`);
+  // if (!response.ok) {
+  //   throw json(
+  //     { message: 'Could not fetch details for selected chef.' },
+  //     { status: 500 }
+  //   );
+  // }
+  // const resData = await response.json();
+  // return resData;
 }
 
 async function loadChefRecipes(chefId) {
