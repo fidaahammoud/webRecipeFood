@@ -1,7 +1,7 @@
 import { json, redirect } from 'react-router-dom';
 import AuthForm from '../components/AuthForm';
-
 import HttpService from '../components/HttpService';
+import {login} from '../components/auth.js';
 
 const httpService = new HttpService();
 
@@ -32,11 +32,13 @@ export async function action({ request }) {
     const url = API_HOST +"/" + mode;
     console.log("URL : "+ url);
 
-    const response = await httpService.post(url,authData,null);
+    const response = await httpService.post(url, authData, null);
    
-    localStorage.setItem('token', response.access_token);
-    localStorage.setItem('userId', response.data.id);
+    const authToken = response.access_token;
+    const userId = response.data.id;
 
+    login(authToken,userId);
+    
     if (mode === "register") {
       return redirect('/auth/additional-details');
     } 
@@ -47,5 +49,4 @@ export async function action({ request }) {
     console.error('API Request Failed:', error);
     throw error;
   }
-
 }

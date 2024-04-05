@@ -7,10 +7,11 @@ function AdditionalDetailsForm() {
   const data = useActionData(); 
   const navigation = useNavigation(); 
 
+ 
 
   return (
     <>
-      <Form method='post'  className={classes.form}>
+      <Form method='post' className={classes.form}>
         <h1>Provide Additional Details</h1>
         <p>
           <label htmlFor="username">Username</label>
@@ -22,7 +23,7 @@ function AdditionalDetailsForm() {
         </p>
         <p>
           <label htmlFor="bio">About Me</label>
-          <input id="bio" type="text" name="bio" required />
+          <input id="bio" type="text" name="bio"  />
         </p>
         <p>
           <label htmlFor="profileImage">Profile Image</label>

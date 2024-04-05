@@ -1,84 +1,52 @@
-// import React from 'react';
-// import AdditionalDetailsForm from '../components/AdditionalDetailsForm';
-// import { redirect } from 'react-router-dom';
+import { redirect } from 'react-router-dom'; // Import redirect function
+import AdditionalDetailsForm from '../components/AdditionalDetailsForm';
+import HttpService from '../components/HttpService';
+import { getAuthToken, getUserId } from '../components/auth.js';
 
-// async function submitProfile(formData, userId, token) {
-//   try {
-//     const response = await fetch(`http://192.168.56.10:80/laravel/api/completeProfile/${userId}`, {
-//       method: 'PUT',
-//       body: formData, 
-//       headers: {
-//         'Authorization': `Bearer ${token}`, 
-//       },
-//     });
+const httpService = new HttpService();
 
-//     if (!response.ok) {
-//       throw new Error('Failed to complete profile');
-//     }
+function CompleteAuthPage() {
+  return <AdditionalDetailsForm />;
+}
 
-//     return response.json();
-//   } catch (error) {
-//     console.error('API Request Failed:', error);
-//     throw error;
-//   }
-// }
+export default CompleteAuthPage;
 
-// async function saveImageToDatabase( userId, token) {
-//   try {
+export async function action({ request }) {
+//   const token = localStorage.getItem('token');
+//   const userId = localStorage.getItem('userId');
 
-//     const formData = new FormData();
-//     formData.append('image', {
-//       uri: selectedImage.uri,
-//       name: 'profile_image.jpg',
-//       type: 'image/jpg',
-//     });
+    const token = getAuthToken();
+    const userId = getUserId();
+    console.log(token);
+    console.log(userId);
+  try {
+    const data = await request.formData();
+    // Extract username, name, and bio from form data
+    const username = data.get('username');
+    const name = data.get('name');
+    const bio = data.get('bio');
 
-//     const response = await fetch(`http://192.168.56.10:80/laravel/api/image/${userId}/image`, {
-//       method: 'PUT',
-//       body: formData, 
-//       headers: {
-//         'Authorization': `Bearer ${token}`, 
-//       },
-//     });
+    // Get the selected image file from the form data
+    const image = data.get('profileImage');
 
-//     if (!response.ok) {
-//       throw new Error('Failed to complete profile');
-    
-//     }
+    // Create a FormData object and append the image
+    const imageFormData = new FormData();
+    imageFormData.append('profileImage', image); // Use 'profileImage' as key
+    // Upload the image
+    const imageUploadResponse = await httpService.uploadImage(`http://192.168.56.10:80/laravel/api/image/${userId}/image`, imageFormData, token);
+    const imageId = imageUploadResponse.image_id;
 
-//     return response.json();
-//   } catch (error) {
-//     console.error('API Request Failed:', error);
-//     throw error;
-//   }
-// }
-
-// export async function action({ request }) {
-//   try {
-//     const token = localStorage.getItem('token');
-//     const userId = localStorage.getItem('userId');
-
-//     if (!token || !userId) {
-//       throw new Error('Token or user ID not found in local storage');
-//     }
-
-//     const formData = new FormData();
-//     for (const key in request) {
-//       formData.append(key, request[key]);
-//     }
-
-//     // Submit profile data
-//     await submitProfile(formData, userId, token);
-
-//     return redirect('/');
-//   } catch (error) {
-//     console.error('Action Failed:', error);
-//     throw error;
-//   }
-// }
-
-// function CompleteAuth() {
-//   return <AdditionalDetailsForm />;
-// }
-
-// export default CompleteAuth;
+    // Complete profile
+    const authData = { username, name, bio, image_id: imageId };
+    const API_HOST = process.env.REACT_APP_API_URL;
+    const url = `${API_HOST}/completeProfile/${userId}`;
+  
+    const response = await httpService.put(url, authData, token);
+  
+    return redirect('/');
+  
+  } catch (error) {
+    console.error('API Request Failed:', error);
+    throw error;
+  }
+}
