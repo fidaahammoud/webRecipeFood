@@ -31,21 +31,6 @@ async function loadChefs() {
   const response = await httpService.get(url,null);
   return response.data;
 
-
-  // const response = await fetch("http://192.168.56.10:80/laravel/api/users");
-
-  // if (!response.ok) {
-  //   throw json(
-  //     { message: 'Could not fetch categories.' },
-  //     {
-  //       status: 500,
-  //     }
-  //   );
-  // } else {
-  //   const responseData = await response.json();
-  //   return responseData.data;
-
-  // }
 }
 
 export function loader() {

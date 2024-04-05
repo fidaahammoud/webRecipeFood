@@ -38,21 +38,6 @@ async function loadRecipe(id) {
   const response = await httpService.get(url,null);
   return response;
 
-
-  //const response = await fetch("http://192.168.56.10:80/laravel/api/recipes/" + id);
-
-
-  // if (!response.ok) {
-  //   throw json(
-  //     { message: 'Could not fetch details for selected recipe.' },
-  //     {
-  //       status: 500,
-  //     }
-  //   );
-  // } else {
-  //   const resData = await response.json();
-  //   return resData;
-  // }
 }
 
 

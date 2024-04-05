@@ -33,38 +33,19 @@ export async function action({ request }) {
     console.log("URL : "+ url);
 
     const response = await httpService.post(url,authData,null);
-    //const responseData = await response.json();
-    // const response = await fetch(url, {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify(authData), 
-    // });
-    // console.log('API Response:', response);
-
-    // const responseData = await response.json();
-    // console.log('API Response Data:', responseData);
-
-    // if (response.status === 422 || response.status === 401) {
-    //   return response;
-    // }
-
-    // if (!response.ok) {
-    //   throw json({ message: 'Could not authenticate user.' }, { status: 500 });
-    // }
-
    
     localStorage.setItem('token', response.access_token);
     localStorage.setItem('userId', response.data.id);
 
     if (mode === "register") {
       return redirect('/auth/additional-details');
-    } else if (mode === "login") {
+    } 
+    else if (mode === "login") {
       return redirect('/');
     }
   } catch (error) {
     console.error('API Request Failed:', error);
     throw error;
   }
+
 }

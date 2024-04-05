@@ -12,7 +12,7 @@ class HttpService extends Component {
         },
       });
       if (!response.ok) {
-        throw new json('Error try again');
+        throw json({ message: 'Something went wrong!' }, { status: 500 });
       }
       return await response.json();
     } catch (error) {
@@ -39,10 +39,10 @@ class HttpService extends Component {
         console.log('Response body:', responseBody);
   
         if (response.status === 401 || response.status === 422) {
-          //ToastAndroid.show(responseBody.message, ToastAndroid.SHORT);
-          console.log(responseBody.message);
+          throw json({ message: responseBody.message });
+            
         } else {
-          throw new Error('Network response was not ok');
+          throw json({ message: 'Something went wrong!' }, { status: 500 });
         }
       }
       return responseBody;
@@ -70,13 +70,10 @@ class HttpService extends Component {
         console.log('Response body:', responseBody);
   
         if (response.status === 400) {
-          // Check if the message field exists in the response body
           const errorMessage = Array.isArray(responseBody.message) ? responseBody.message.join(', ') : responseBody.message;
-          // Join multiple error messages if they are in an array
-          //ToastAndroid.show(errorMessage, ToastAndroid.SHORT);
           console.log(errorMessage);
         } else {
-          throw new Error('Network response was not ok');
+          throw json({ message: 'Something went wrong!' }, { status: 500 });
         }
       }
       return responseBody;
@@ -97,7 +94,7 @@ class HttpService extends Component {
         },
       });
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        throw json({ message: 'Something went wrong!' }, { status: 500 });
       }
       return await response.json();
     } catch (error) {
@@ -119,7 +116,7 @@ class HttpService extends Component {
       });
 
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        throw json({ message: 'Something went wrong!' }, { status: 500 });
       }
       return await response.json();
     } catch (error) {

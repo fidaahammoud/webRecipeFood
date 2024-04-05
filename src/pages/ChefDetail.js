@@ -44,26 +44,10 @@ async function loadChefInfo(chefId) {
   const response = await httpService.get(url,null);
   return response;
 
-  // const response = await fetch(`http://192.168.56.10:80/laravel/api/users/${chefId}`);
-  // if (!response.ok) {
-  //   throw json(
-  //     { message: 'Could not fetch details for selected chef.' },
-  //     { status: 500 }
-  //   );
-  // }
-  // const resData = await response.json();
-  // return resData;
 }
 
 async function loadChefRecipes(chefId) {
-  // Replace with your actual recipe API endpoint URL
   const response = await fetch(`http://192.168.56.10:80/laravel/api/users/${chefId}/recipes`);
-  if (!response.ok) {
-    throw json(
-      { message: 'Could not fetch recipes for this chef.' },
-      { status: 500 }
-    );
-  }
   const recipesData = await response.json();
   return recipesData.data;
 }
