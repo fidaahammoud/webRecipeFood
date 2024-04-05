@@ -18,6 +18,9 @@ import AuthenticationPage, { action as authAction } from './pages/Authentication
 
 import CompleteAuth, { action as completeAuthAction } from './pages/CompleteAuth';
 
+import MyProfilePage, { loader as profileDetailLoader } from './pages/MyProfile';
+import ImageUpload from './components/ImageUpload';
+import { action as logoutAction } from './pages/Logout';
 
 
 const router = createBrowserRouter([
@@ -79,6 +82,24 @@ const router = createBrowserRouter([
         path: 'auth/additional-details',
         element: <CompleteAuth />,
         action: completeAuthAction, 
+      },
+
+      {
+        path: 'profile',
+        id: 'myPresonal-detail',
+        element: <MyProfilePage />,
+        loader: profileDetailLoader,
+      },
+
+      {
+        path: 'upload',
+        element: <ImageUpload />,
+        //loader: profileDetailLoader,
+      },
+
+      {
+        path: 'logout',
+        action: logoutAction,
       },
     ],
   },

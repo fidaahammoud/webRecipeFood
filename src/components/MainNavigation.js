@@ -1,9 +1,11 @@
-import { NavLink } from 'react-router-dom';
+import { Form, NavLink } from 'react-router-dom';
+import { getIsAuthenticated } from '../components/auth.js'; // Import the authentication module
 
 import classes from '../css/MainNavigation.module.css';
 
-
 function MainNavigation() {
+  const isAuthenticated = getIsAuthenticated(); // Get the authentication status
+
   return (
     <header className={classes.header}>
       <nav>
@@ -19,7 +21,6 @@ function MainNavigation() {
               Home
             </NavLink>
           </li>
-
           <li>
             <NavLink
               to="/recipes"
@@ -30,7 +31,6 @@ function MainNavigation() {
               Recipes
             </NavLink>
           </li>
-
           <li>
             <NavLink
               to="/chefs"
@@ -41,7 +41,6 @@ function MainNavigation() {
               Chefs
             </NavLink>
           </li>
-
           <li>
             <NavLink
               to="/categories"
@@ -52,20 +51,50 @@ function MainNavigation() {
               Categories
             </NavLink>
           </li>
-
+          {!isAuthenticated && (
+            <li>
+              <NavLink
+                to="/auth"
+                className={({ isActive }) =>
+                  isActive ? classes.active : undefined
+                }
+              >
+                Authorization
+              </NavLink>
+            </li>
+          )}
+          {isAuthenticated && ( 
+            <li>
+              <NavLink
+                to="/profile"
+                className={({ isActive }) =>
+                  isActive ? classes.active : undefined
+                }
+              >
+                Profile
+              </NavLink>
+            </li>
+          )}
           <li>
             <NavLink
-              to="/auth"
+              to="/upload"
               className={({ isActive }) =>
                 isActive ? classes.active : undefined
               }
             >
-              Authorization
+              upload
             </NavLink>
           </li>
+
+          {isAuthenticated && (
+            <li>
+              <Form action="/logout" method="post">
+                <button>Logout</button>
+              </Form>
+            </li>
+          )}
         </ul>
       </nav>
-    
     </header>
   );
 }

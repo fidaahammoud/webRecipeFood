@@ -14,6 +14,9 @@ import HttpService from '../components/HttpService';
 
 const httpService = new HttpService();
 
+
+
+
 function CategoryDetailPage() {
     
   const { category } = useRouteLoaderData('category-detail');
@@ -32,7 +35,6 @@ function CategoryDetailPage() {
 export default CategoryDetailPage;
 
 async function loadCategory(id) {
-
 
   const API_HOST = process.env.REACT_APP_API_URL;
   const url = API_HOST+"/categories/"+id;

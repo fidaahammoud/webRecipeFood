@@ -42,6 +42,8 @@
 .creatorName {
   font-size: 16px;
   font-weight: bold;
+  text-transform: capitalize; 
+
 }
 
 .recipeImage {
@@ -67,6 +69,7 @@
 .categoryName {
   font-size: 16px;
   font-weight: bold;
+
 }
 
 .recipeDetails {
@@ -100,13 +103,18 @@
 .title {
   width: 100%;
   text-align: center;
+  text-transform: capitalize; 
+
 }
 .creatorLink {
   text-decoration: none;
   color: inherit;
+
 }
 
 .recipeLink {
   text-decoration: none;
   color: inherit;
+      text-transform: capitalize; 
+
 }

@@ -30,10 +30,16 @@ export async function action({ request }) {
     const image = data.get('profileImage');
 
     // Create a FormData object and append the image
-    const imageFormData = new FormData();
-    imageFormData.append('profileImage', image); // Use 'profileImage' as key
+    const formData = new FormData();
+    formData.append('image', image); // Use 'profileImage' as key
+    // formData.append('image', {
+    //   uri: selectedImage.uri,
+    //   name: 'profile_image.jpg',
+    //   type: 'image/jpg',
+    // });
+
     // Upload the image
-    const imageUploadResponse = await httpService.uploadImage(`http://192.168.56.10:80/laravel/api/image/${userId}/image`, imageFormData, token);
+    const imageUploadResponse = await httpService.uploadImage(`http://192.168.56.10:80/laravel/api/image/${userId}/image`, formData, token);
     const imageId = imageUploadResponse.image_id;
 
     // Complete profile

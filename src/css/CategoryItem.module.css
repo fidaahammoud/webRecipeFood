@@ -42,6 +42,8 @@
 .creatorName {
   font-size: 16px;
   font-weight: bold;
+  text-transform: capitalize; 
+
 }
 
 .recipeImage {

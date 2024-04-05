@@ -27,18 +27,23 @@
   .name {
     font-size: 24px;
     margin-bottom: 5px;
-    color:  #f5e0e0;;
+    color:  #f5e0e0;
+    text-transform: capitalize; 
 
   }
   
   .username {
     font-size: 16px;
-    color:  #f5e0e0;;  }
+    color:  #f5e0e0;
+    text-transform: capitalize; 
+    }
   
   .bio {
     font-size: 18px;
     margin-top: 10px;
-    color:  #f5e0e0;;  }
+    color:  #f5e0e0;
+    text-transform: capitalize; 
+  }
 
 
  

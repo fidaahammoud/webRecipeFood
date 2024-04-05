@@ -1,6 +1,9 @@
 import classes from '../css/ChefInfo.module.css';
 
+
 function ChefInfo({ chef }) {
+
+
   return (
     <div className={classes.container}>
       <div className={classes.imageContainer}>

@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons'; // Import the icons you want to use
+import { faAngleDown, faAngleUp, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons'; 
 import classes from '../css/RecipeItem.module.css';
+import { Link } from 'react-router-dom';
+import { getUserId } from '../components/auth.js';
 
 function RecipeItem({ recipe }) {
   const [showIngredients, setShowIngredients] = useState(false);
   const [showSteps, setShowSteps] = useState(false);
+  const loggedInUser = getUserId();
 
   const toggleIngredients = () => {
     setShowIngredients(!showIngredients);
@@ -15,17 +18,40 @@ function RecipeItem({ recipe }) {
     setShowSteps(!showSteps);
   };
 
+  const displayEditAndDelete = () => {
+    if (loggedInUser === recipe.user.id) {
+      return (
+        <div className={classes.editDelete}>
+          <button onClick={() => handleEdit(recipe.id)}><FontAwesomeIcon icon={faEdit} /></button>
+          <button onClick={() => handleDelete(recipe.id)}><FontAwesomeIcon icon={faTrash} /></button>
+        </div>
+      );
+    }
+  };
+
+  const handleEdit = (recipeId) => {
+    // Logic to handle editing the recipe
+    console.log("Editing recipe with ID:", recipeId);
+  };
+
+  const handleDelete = (recipeId) => {
+    // Logic to handle deleting the recipe
+    console.log("Deleting recipe with ID:", recipeId);
+  };
+
   return (
     <article className={classes.recipeContainer}>
       <div className={classes.recipe}>
-        <div className={classes.userInfo}>
-          <img
-            src={`http://192.168.56.10:80/laravel/storage/${recipe.user.images.image}`}
-            alt={recipe.user.name}
-            className={classes.userImage}
-          />
-          <h1 className={classes.userName}>{recipe.user.name}</h1>
-        </div>
+        <Link to={`/chefs/${recipe.user.id}`} className={classes.creatorLink}>
+          <div className={classes.userInfo}>
+            <img
+              src={`http://192.168.56.10:80/laravel/storage/${recipe.user.images.image}`}
+              alt={recipe.user.name}
+              className={classes.userImage}
+            />
+            <h1 className={classes.userName}>{recipe.user.name}</h1>
+          </div>
+        </Link>
         <img
           src={`http://192.168.56.10:80/laravel/storage/${recipe.images.image}`}
           alt={recipe.title}
@@ -33,7 +59,10 @@ function RecipeItem({ recipe }) {
         />
       </div>
       <div className={classes.recipeDetails}>
-        <h1>{recipe.title}</h1>
+        <div className={classes.recipeTitle}>
+          <h1>{recipe.title}</h1>
+          {displayEditAndDelete()}
+        </div>
 
         <p>Description : {recipe.description}</p>
         <p>Category: {recipe.category.name}</p>
@@ -46,11 +75,11 @@ function RecipeItem({ recipe }) {
           <FontAwesomeIcon icon={showIngredients ? faAngleUp : faAngleDown} onClick={toggleIngredients} />
         </div>
         {showIngredients && (
-          <ul>
+          <ol>
             {recipe.ingredients.map(ingredient => (
               <li key={ingredient.id}>{ingredient.ingredientName} - {ingredient.measurementUnit}</li>
             ))}
-          </ul>
+          </ol>
         )}
 
         <div className={classes.sectionHeader}>
@@ -64,7 +93,6 @@ function RecipeItem({ recipe }) {
             ))}
           </ol>
         )}
-
       </div>
     </article>
   );
