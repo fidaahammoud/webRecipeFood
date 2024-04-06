@@ -1,58 +1,56 @@
-import { redirect } from 'react-router-dom'; // Import redirect function
+import React, { useState } from 'react';
 import AdditionalDetailsForm from '../components/AdditionalDetailsForm';
 import HttpService from '../components/HttpService';
 import { getAuthToken, getUserId } from '../components/auth.js';
+import UploadImageToDB from '../components/ImageUpload.js';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate hook
 
 const httpService = new HttpService();
 
 function CompleteAuthPage() {
-  return <AdditionalDetailsForm />;
+  const [imageId, setImageId] = useState(null);
+  const navigate = useNavigate(); // Use useNavigate hook
+
+  const handleSubmit = async (formData) => {
+    const token = getAuthToken();
+    const userId = getUserId();
+    console.log("Completeauth");
+    console.log("token : " + token);
+    console.log("user id  : " + userId);
+
+    try {
+      const authData = {
+        username: formData.get('username'),
+        name: formData.get('name'),
+        bio: formData.get('bio'),
+        image_id: imageId,
+      };
+
+      const API_HOST = process.env.REACT_APP_API_URL;
+      console.log("API COMPLETE PROFILE: " + `${API_HOST}/completeProfile/${userId}`);
+      const url = `${API_HOST}/completeProfile/${userId}`;
+
+      const response = await httpService.put(url, authData, token);
+      console.log(response);
+
+      navigate('/');
+
+
+    } catch (error) {
+      console.error('Error completing profile:', error);
+    }
+  };
+
+  const handleImageUpload = (imageId) => {
+    setImageId(imageId);
+  };
+
+  return (
+    <>
+      <UploadImageToDB onImageUpload={handleImageUpload} />
+      <AdditionalDetailsForm onSubmit={handleSubmit} />
+    </>
+  );
 }
 
 export default CompleteAuthPage;
-
-export async function action({ request }) {
-//   const token = localStorage.getItem('token');
-//   const userId = localStorage.getItem('userId');
-
-    const token = getAuthToken();
-    const userId = getUserId();
-    console.log(token);
-    console.log(userId);
-  try {
-    const data = await request.formData();
-    // Extract username, name, and bio from form data
-    const username = data.get('username');
-    const name = data.get('name');
-    const bio = data.get('bio');
-
-    // Get the selected image file from the form data
-    const image = data.get('profileImage');
-
-    // Create a FormData object and append the image
-    const formData = new FormData();
-    formData.append('image', image); // Use 'profileImage' as key
-    // formData.append('image', {
-    //   uri: selectedImage.uri,
-    //   name: 'profile_image.jpg',
-    //   type: 'image/jpg',
-    // });
-
-    // Upload the image
-    const imageUploadResponse = await httpService.uploadImage(`http://192.168.56.10:80/laravel/api/image/${userId}/image`, formData, token);
-    const imageId = imageUploadResponse.image_id;
-
-    // Complete profile
-    const authData = { username, name, bio, image_id: imageId };
-    const API_HOST = process.env.REACT_APP_API_URL;
-    const url = `${API_HOST}/completeProfile/${userId}`;
-  
-    const response = await httpService.put(url, authData, token);
-  
-    return redirect('/');
-  
-  } catch (error) {
-    console.error('API Request Failed:', error);
-    throw error;
-  }
-}

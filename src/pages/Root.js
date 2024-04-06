@@ -1,15 +1,21 @@
-import { Outlet, useNavigation } from 'react-router-dom';
-
+import { useEffect } from 'react';
+import { Outlet, useLoaderData } from 'react-router-dom';
 import MainNavigation from '../components/MainNavigation';
+import { logout } from '../components/auth';
 
 function RootLayout() {
-  // const navigation = useNavigation();
+  const token = useLoaderData(); 
+
+  useEffect(() => {
+    if (!token) {
+      return;
+    }
+  }, [token]);
 
   return (
     <>
       <MainNavigation />
       <main>
-        {/* {navigation.state === 'loading' && <p>Loading...</p>} */}
         <Outlet />
       </main>
     </>

@@ -1,40 +1,50 @@
-// React component for uploading image
-import React, { useState } from 'react';
-import HttpService from '../components/HttpService';
+import React, { Fragment, useRef, useState } from 'react';
+import { getAuthToken, getUserId } from '../components/auth.js';
 
+const UploadImageToDB = ({ onImageUpload }) => {
+  const [image, setImage] = useState();
+  const imageRef = useRef();
 
-const httpService = new HttpService();
-const ImageUpload = () => {
-    const [image, setImage] = useState(null);
+  const fileSelectHandler = event => {
+    setImage(event.target.files[0]);
+  };
 
-    const handleImageChange = (e) => {
-        setImage(e.target.files[0]);
-    };
+  const handleSubmit = () => {
+    const token = getAuthToken();
+    const userId = getUserId();
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        const formData = new FormData();
-        console.log(image);
-        formData.append('image', image);
-        try {
-            const response = await httpService.uploadImage(`http://192.168.56.10:80/laravel/api/image/7/image`, formData, "150|lHfLzFMV4kHIp6iGnEDe56XuaxVsL5ffNrFxR9ROde1c692d");
+    const formData = new FormData();
+    formData.append("image", image ? image : null);
 
-           
-            console.log('Image uploaded successfully:', response.data);
-        } catch (error) {
-            console.error('Error uploading image:', error);
-        }
-    };
+    fetch(`http://192.168.56.10/laravel/api/uploadImageWeb/${userId}`, {
+      method: "POST",
+      body: formData,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log("Data image id : "+data.image_id );
+      // Pass the imageId back to the parent component
+      onImageUpload(data.image_id);
+    })
+    .catch(error => {
+      console.error('Error uploading image:', error);
+    });
+  };
 
-    return (
-        <div>
-            <h2>Upload Image</h2>
-            <form onSubmit={handleSubmit}>
-                <input type="file" onChange={handleImageChange} />
-                <button type="submit">Upload</button>
-            </form>
-        </div>
-    );
-};
+  return (
+    <Fragment>
+      <div>
+        <input type="file" name="image" ref={imageRef} onChange={fileSelectHandler} />
+        <br />
+        <button onClick={handleSubmit}>Send</button>
+      </div>
+      <br />
+      <img src={image} width={500} />
+    </Fragment>
+  );
+}
 
-export default ImageUpload;
+export default UploadImageToDB;

@@ -1,10 +1,10 @@
-import { Form, NavLink } from 'react-router-dom';
-import { getIsAuthenticated } from '../components/auth.js'; // Import the authentication module
+import { Form,NavLink } from 'react-router-dom';
+import { getIsAuthenticated } from '../components/auth.js'; 
 
 import classes from '../css/MainNavigation.module.css';
 
 function MainNavigation() {
-  const isAuthenticated = getIsAuthenticated(); // Get the authentication status
+  const isAuthenticated = getIsAuthenticated(); 
 
   return (
     <header className={classes.header}>
@@ -75,16 +75,6 @@ function MainNavigation() {
               </NavLink>
             </li>
           )}
-          <li>
-            <NavLink
-              to="/upload"
-              className={({ isActive }) =>
-                isActive ? classes.active : undefined
-              }
-            >
-              upload
-            </NavLink>
-          </li>
 
           {isAuthenticated && (
             <li>

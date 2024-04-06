@@ -114,7 +114,7 @@ class HttpService extends Component {
           Authorization: `Bearer ${token}`,
         },
       });
-
+      console.log(response.json());
       if (!response.ok) {
         throw json({ message: 'Something went wrong!' }, { status: 500 });
       }

@@ -16,10 +16,9 @@ import ChefsPage, { loader as chefsLoader } from './pages/Chefs';
 import ChefDetailPage, { loader as chefDetailLoader } from './pages/ChefDetail';
 import AuthenticationPage, { action as authAction } from './pages/Authentication';
 
-import CompleteAuth, { action as completeAuthAction } from './pages/CompleteAuth';
+import CompleteAuthPage from './pages/CompleteAuth';
 
 import MyProfilePage, { loader as profileDetailLoader } from './pages/MyProfile';
-import ImageUpload from './components/ImageUpload';
 import { action as logoutAction } from './pages/Logout';
 
 
@@ -80,8 +79,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'auth/additional-details',
-        element: <CompleteAuth />,
-        action: completeAuthAction, 
+        element: <CompleteAuthPage />,
       },
 
       {
@@ -89,12 +87,6 @@ const router = createBrowserRouter([
         id: 'myPresonal-detail',
         element: <MyProfilePage />,
         loader: profileDetailLoader,
-      },
-
-      {
-        path: 'upload',
-        element: <ImageUpload />,
-        //loader: profileDetailLoader,
       },
 
       {
