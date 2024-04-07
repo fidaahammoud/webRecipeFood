@@ -76,6 +76,19 @@ function MainNavigation() {
             </li>
           )}
 
+          {isAuthenticated && ( 
+            <li>
+              <NavLink
+                to="/addRecipe"
+                className={({ isActive }) =>
+                  isActive ? classes.active : undefined
+                }
+              >
+                Add Recipe
+              </NavLink>
+            </li>
+          )}
+
           {isAuthenticated && (
             <li>
               <Form action="/logout" method="post">

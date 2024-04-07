@@ -1,4 +1,5 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import React, { useEffect } from 'react';
 
 import ErrorPage from './pages/Error';
 
@@ -21,6 +22,11 @@ import CompleteAuthPage from './pages/CompleteAuth';
 import MyProfilePage, { loader as profileDetailLoader } from './pages/MyProfile';
 import { action as logoutAction } from './pages/Logout';
 
+
+import { getIsAuthenticated } from './components/auth.js'; 
+
+import AddRecipeFormPage from './components/AddRecipeForm.js';
+import AddRecipeDeatilsPage from './pages/AddRecipe';
 
 const router = createBrowserRouter([
   {
@@ -85,9 +91,17 @@ const router = createBrowserRouter([
       {
         path: 'profile',
         id: 'myPresonal-detail',
-        element: <MyProfilePage />,
+       // element: <MyProfilePage />,
+        element:  <MyProfilePage /> ,
         loader: profileDetailLoader,
       },
+
+      {
+        path: 'addRecipe',
+        element: <AddRecipeDeatilsPage/>,
+       // loader: profileDetailLoader,
+      },
+
 
       {
         path: 'logout',
@@ -97,8 +111,20 @@ const router = createBrowserRouter([
   },
 ]);
 
-function App() {
+const App = () => {
+  useEffect(() => {
+    const handleRefresh = () => {
+      console.log("Page is refreshing");
+    };
+
+    window.addEventListener('beforeunload', handleRefresh);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleRefresh);
+    };
+  }, []);
+
   return <RouterProvider router={router} />;
-}
+};
 
 export default App;

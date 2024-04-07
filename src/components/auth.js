@@ -19,11 +19,13 @@ const getIsAuthenticated = () => {
 };
 
 const getAuthToken = () => {
-  return authToken;
+   return authToken;
+ // return "214|QQDkmfnHom7pOKjfpOs7hRCmYuVW1oN4gGid3XUI6fb195ae"
 };
 
 const getUserId = () => {
-  return userId;
+   return userId;
+  //return "7"
 };
 
 export { login, logout, getIsAuthenticated, getAuthToken, getUserId };

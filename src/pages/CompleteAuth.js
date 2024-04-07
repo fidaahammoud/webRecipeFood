@@ -3,13 +3,13 @@ import AdditionalDetailsForm from '../components/AdditionalDetailsForm';
 import HttpService from '../components/HttpService';
 import { getAuthToken, getUserId } from '../components/auth.js';
 import UploadImageToDB from '../components/ImageUpload.js';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate hook
+import { useNavigate } from 'react-router-dom'; 
 
 const httpService = new HttpService();
 
 function CompleteAuthPage() {
   const [imageId, setImageId] = useState(null);
-  const navigate = useNavigate(); // Use useNavigate hook
+  const navigate = useNavigate(); 
 
   const handleSubmit = async (formData) => {
     const token = getAuthToken();

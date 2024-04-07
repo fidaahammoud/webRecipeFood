@@ -15,8 +15,11 @@ const UploadImageToDB = ({ onImageUpload }) => {
 
     const formData = new FormData();
     formData.append("image", image ? image : null);
+    
+    const API_HOST = process.env.REACT_APP_API_URL;
+    const url = `${API_HOST}/uploadImageWeb/${userId}`;
 
-    fetch(`http://192.168.56.10/laravel/api/uploadImageWeb/${userId}`, {
+    fetch(url, {
       method: "POST",
       body: formData,
       headers: {
