@@ -1,8 +1,8 @@
 import { redirect } from 'react-router-dom';
-import { logout } from '../components/auth.js';
+import authManagerInstance from '../components/AuthManager';
 
 export function action() {
-  logout();
+  authManagerInstance.logout();
   
   return redirect('/');
 }

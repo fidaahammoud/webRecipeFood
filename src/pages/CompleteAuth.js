@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import AdditionalDetailsForm from '../components/AdditionalDetailsForm';
 import HttpService from '../components/HttpService';
-import { getAuthToken, getUserId } from '../components/auth.js';
 import UploadImageToDB from '../components/ImageUpload.js';
 import { useNavigate } from 'react-router-dom'; 
+import authManagerInstance from '../components/AuthManager';
 
 const httpService = new HttpService();
 
@@ -12,8 +12,9 @@ function CompleteAuthPage() {
   const navigate = useNavigate(); 
 
   const handleSubmit = async (formData) => {
-    const token = getAuthToken();
-    const userId = getUserId();
+    const token = authManagerInstance.getAuthToken();;
+    const userId = authManagerInstance.getUserId();
+
     console.log("Completeauth");
     console.log("token : " + token);
     console.log("user id  : " + userId);

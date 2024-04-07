@@ -1,5 +1,5 @@
 import React, { Fragment, useRef, useState } from 'react';
-import { getAuthToken, getUserId } from '../components/auth.js';
+import authManagerInstance from '../components/AuthManager';
 
 const UploadImageToDB = ({ onImageUpload }) => {
   const [image, setImage] = useState();
@@ -10,8 +10,8 @@ const UploadImageToDB = ({ onImageUpload }) => {
   };
 
   const handleSubmit = () => {
-    const token = getAuthToken();
-    const userId = getUserId();
+    const token = authManagerInstance.getAuthToken();;
+    const userId = authManagerInstance.getUserId();
 
     const formData = new FormData();
     formData.append("image", image ? image : null);

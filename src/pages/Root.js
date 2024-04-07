@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { Outlet, useLoaderData } from 'react-router-dom';
 import MainNavigation from '../components/MainNavigation';
-import { logout } from '../components/auth';
 
 function RootLayout() {
   const token = useLoaderData(); 

@@ -1,10 +1,13 @@
 import { Form,NavLink } from 'react-router-dom';
-import { getIsAuthenticated } from '../components/auth.js'; 
+
+import authManagerInstance from '../components/AuthManager';
 
 import classes from '../css/MainNavigation.module.css';
 
 function MainNavigation() {
-  const isAuthenticated = getIsAuthenticated(); 
+ //const isAuthenticated = getIsAuthenticated(); 
+ 
+  const isAuthenticated = authManagerInstance.getIsAuthenticated();
 
   return (
     <header className={classes.header}>

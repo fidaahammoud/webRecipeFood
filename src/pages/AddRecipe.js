@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import AddRecipeFormPage from '../components/AddRecipeForm';
 import HttpService from '../components/HttpService';
-import { getAuthToken, getUserId } from '../components/auth.js';
+import authManagerInstance from '../components/AuthManager';
+
 import UploadImageToDB from '../components/ImageUpload.js';
 import { useNavigate } from 'react-router-dom'; 
 
@@ -11,13 +12,14 @@ function AddRecipeDeatilsPage() {
   const [imageId, setImageId] = useState(null);
   const [ingredients, setIngredients] = useState([{ name: '', unit: '' }]);
   const [steps, setSteps] = useState(['']);
+  const [drinks, setdrinks] = useState([]);
    
 
   const navigate = useNavigate(); 
   
   const handleSubmit = async (formData,steps) => {
-    const token = getAuthToken();
-    const userId = getUserId();
+    const token = authManagerInstance.getAuthToken();;
+    const userId = authManagerInstance.getUserId();
     console.log("token : " + token);
     console.log("user id  : " + userId);
 

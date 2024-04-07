@@ -22,11 +22,9 @@ import CompleteAuthPage from './pages/CompleteAuth';
 import MyProfilePage, { loader as profileDetailLoader } from './pages/MyProfile';
 import { action as logoutAction } from './pages/Logout';
 
-
-import { getIsAuthenticated } from './components/auth.js'; 
-
 import AddRecipeFormPage from './components/AddRecipeForm.js';
 import AddRecipeDeatilsPage from './pages/AddRecipe';
+import authManagerInstance from './components/AuthManager';
 
 const router = createBrowserRouter([
   {
@@ -115,6 +113,7 @@ const App = () => {
   useEffect(() => {
     const handleRefresh = () => {
       console.log("Page is refreshing");
+      authManagerInstance.refresh();
     };
 
     window.addEventListener('beforeunload', handleRefresh);

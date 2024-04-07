@@ -1,8 +1,6 @@
 import { Suspense } from 'react';
 import {
   useRouteLoaderData,
-  json,
-  redirect,
   defer,
   Await,
 } from 'react-router-dom';
@@ -11,7 +9,7 @@ import ChefInfo from '../components/ChefInfo';
 import RecipesList from '../components/RecipesList';
 
 import HttpService from '../components/HttpService';
-import { getAuthToken, getUserId } from '../components/auth.js';
+import authManagerInstance from '../components/AuthManager';
 
 
 const httpService = new HttpService();
@@ -39,9 +37,11 @@ export default MyProfilePage;
 
 
 async function loadChefInfo() {
-    const token = getAuthToken();
-    const userId = getUserId();
+    const token = authManagerInstance.getAuthToken();;
+    const userId = authManagerInstance.getUserId();
     console.log(token);
+    console.log(userId);
+
   const API_HOST = process.env.REACT_APP_API_URL;
   const url = API_HOST+"/users/"+userId;
   const response = await httpService.get(url,token);
@@ -53,7 +53,7 @@ async function loadChefInfo() {
 }
 
 async function loadChefRecipes() {
-    const userId = getUserId();
+    const userId = authManagerInstance.getUserId();
 
   const response = await fetch(`http://192.168.56.10:80/laravel/api/users/${userId}/recipes`);
   const recipesData = await response.json();

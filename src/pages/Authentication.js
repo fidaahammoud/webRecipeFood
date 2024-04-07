@@ -1,7 +1,7 @@
 import { json, redirect } from 'react-router-dom';
 import AuthForm from '../components/AuthForm';
-import HttpService from '../components/HttpService';
-import {login} from '../components/auth.js';
+import HttpService from '../components/HttpService'; 
+import authManagerInstance from '../components/AuthManager';
 
 const httpService = new HttpService();
 
@@ -12,6 +12,9 @@ function AuthenticationPage() {
 export default AuthenticationPage;
 
 export async function action({ request }) {
+ // const auth = new Auth();  
+
+
   console.log("data");
   try {
     const searchParams = new URL(request.url).searchParams;
@@ -37,8 +40,16 @@ export async function action({ request }) {
     const authToken = response.access_token;
     const userId = response.data.id;
 
-    login(authToken,userId);
-    
+    console.log(authToken);
+    console.log(userId);
+
+   // auth.login(authToken,userId);
+    //login(authToken,userId);
+    authManagerInstance.login(authToken,userId);
+    const isAuthenticated = authManagerInstance.getIsAuthenticated();
+    console.log(isAuthenticated);
+
+
     if (mode === "register") {
       return redirect('/auth/additional-details');
     } 

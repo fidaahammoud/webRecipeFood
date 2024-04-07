@@ -3,12 +3,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown, faAngleUp, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons'; 
 import classes from '../css/RecipeItem.module.css';
 import { Link } from 'react-router-dom';
-import { getUserId } from '../components/auth.js';
+import { useNavigate} from 'react-router-dom';
+import HttpService from '../components/HttpService';
+import authManagerInstance from '../components/AuthManager';
+
+const httpService = new HttpService();
 
 function RecipeItem({ recipe }) {
   const [showIngredients, setShowIngredients] = useState(false);
   const [showSteps, setShowSteps] = useState(false);
-  const loggedInUser = getUserId();
+  const loggedInUser = authManagerInstance.getUserId();
+  const navigate = useNavigate(); 
 
   const toggleIngredients = () => {
     setShowIngredients(!showIngredients);
@@ -30,13 +35,19 @@ function RecipeItem({ recipe }) {
   };
 
   const handleEdit = (recipeId) => {
-    // Logic to handle editing the recipe
     console.log("Editing recipe with ID:", recipeId);
   };
 
-  const handleDelete = (recipeId) => {
-    // Logic to handle deleting the recipe
+  const handleDelete = async (recipeId) => {
     console.log("Deleting recipe with ID:", recipeId);
+    const token = authManagerInstance.getAuthToken();;
+
+    const API_HOST = process.env.REACT_APP_API_URL;
+    const url = `${API_HOST}/recipes/delete/${recipeId}`;
+    await httpService.delete(url,token); 
+    navigate('/');
+
+
   };
 
   return (
