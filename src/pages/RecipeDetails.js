@@ -39,7 +39,12 @@ async function loadRecipe(id) {
   const url =   `${API_HOST}/api/${userId}/recipes/${id}`;
   console.log(url);
   const response = await httpService.get(url,token);
-  return response;
+  if(response.isActive === 1){
+    return response;
+  }
+  else{
+    throw json({ message: 'Something went wrong!' }, { status: 500 });
+  }
 
 }
 

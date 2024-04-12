@@ -29,7 +29,9 @@ async function loadRecipes() {
   const url = API_HOST+"/api/recipes?sort=-created_at";
   console.log(url);
   const response = await httpService.get(url,null);
-  return response.data;
+  const activeRecipes = response.data.filter(recipe => recipe.isActive === 1);
+
+  return activeRecipes;
 
 }
 

@@ -1,5 +1,5 @@
 import classes from '../css/ChefInfo.module.css';
-
+import verificationIcon from "../images/Verification-Logo.png";
 
 function ChefInfo({ chef }) {
   const API_HOST = process.env.REACT_APP_API_URL;
@@ -12,9 +12,19 @@ function ChefInfo({ chef }) {
           alt={chef.username}
           className={classes.image}
         />
+        
       </div>
       <div className={classes.details}>
-        <h1 className={classes.name}>{chef.name}</h1>
+        <div className={classes.name}>
+          {chef.name}
+          {chef.isVerified === 1 && (
+            <img
+              src={verificationIcon}
+              alt="Verified"
+              className={classes.verificationLogo}
+            />
+          )}
+        </div>
         <p className={classes.username}>{chef.username}</p>
         <p className={classes.bio}>{chef.bio}</p>
         <div className={classes.followers}>

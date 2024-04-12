@@ -3,9 +3,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown, faAngleUp, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons'; 
 import classes from '../css/RecipeItem.module.css';
 import { Link } from 'react-router-dom';
-import { useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import HttpService from '../components/HttpService';
 import authManagerInstance from '../components/AuthManager';
+import verificationIcon from "../images/Verification-Logo.png";  // Import the verification icon
 
 const httpService = new HttpService();
 
@@ -16,8 +17,6 @@ function RecipeItem({ recipe }) {
   const navigate = useNavigate(); 
 
   const API_HOST = process.env.REACT_APP_API_URL;
-
-
 
   const toggleIngredients = () => {
     setShowIngredients(!showIngredients);
@@ -50,8 +49,6 @@ function RecipeItem({ recipe }) {
     const url = `${API_HOST}/recipes/delete/${recipeId}`;
     await httpService.delete(url,token); 
     navigate('/');
-
-
   };
 
   return (
@@ -64,7 +61,16 @@ function RecipeItem({ recipe }) {
               alt={recipe.user.name}
               className={classes.userImage}
             />
-            <h1 className={classes.userName}>{recipe.user.name}</h1>
+            <div className={classes.userNameContainer}>
+              <h1 className={classes.userName}>{recipe.user.name}</h1>
+              {recipe.user.isVerified === 1 && (
+                <img
+                  src={verificationIcon}
+                  alt="Verified"
+                  className={classes.verificationLogo}
+                />
+              )}
+            </div>
           </div>
         </Link>
         <img

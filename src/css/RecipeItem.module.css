@@ -41,10 +41,12 @@
 }
 
 .userName {
-  font-size: 1.5rem; 
+  font-size: 1.5rem;
+  margin-right: 10px;  
 }
 
-/* Add icon styles */
+
+
 .sectionHeader {
   display: flex;
   align-items: center;
@@ -62,6 +64,16 @@
 
 .editDelete {
   display: flex;
-  gap: 1rem; /* Adjust the gap as needed */
+  gap: 1rem; 
 }
 
+.userNameContainer {
+  display: flex;
+  align-items: center;  
+}
+.verificationLogo {
+  width: 20px;
+  height: 20px;
+  margin-left: 10px;
+  border-radius: 50%;
+}
