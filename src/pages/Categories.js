@@ -24,7 +24,7 @@ export default CategoriesPage;
 async function loadCategories() {
 
   const API_HOST = process.env.REACT_APP_API_URL;
-  const url = API_HOST+"/categories";
+  const url = API_HOST+"/api/categories";
   const response = await httpService.get(url,null);
   return response.data;
 

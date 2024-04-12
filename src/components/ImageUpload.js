@@ -17,7 +17,7 @@ const UploadImageToDB = ({ onImageUpload }) => {
     formData.append("image", image ? image : null);
     
     const API_HOST = process.env.REACT_APP_API_URL;
-    const url = `${API_HOST}/uploadImageWeb/${userId}`;
+    const url = `${API_HOST}/api/uploadImageWeb/${userId}`;
 
     fetch(url, {
       method: "POST",

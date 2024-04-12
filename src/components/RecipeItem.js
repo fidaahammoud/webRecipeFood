@@ -15,6 +15,10 @@ function RecipeItem({ recipe }) {
   const loggedInUser = authManagerInstance.getUserId();
   const navigate = useNavigate(); 
 
+  const API_HOST = process.env.REACT_APP_API_URL;
+
+
+
   const toggleIngredients = () => {
     setShowIngredients(!showIngredients);
   };
@@ -56,7 +60,7 @@ function RecipeItem({ recipe }) {
         <Link to={`/chefs/${recipe.user.id}`} className={classes.creatorLink}>
           <div className={classes.userInfo}>
             <img
-              src={`http://192.168.56.10:80/laravel/storage/${recipe.user.images.image}`}
+              src={`${API_HOST}/storage/${recipe.user.images.image}`}
               alt={recipe.user.name}
               className={classes.userImage}
             />
@@ -64,7 +68,7 @@ function RecipeItem({ recipe }) {
           </div>
         </Link>
         <img
-          src={`http://192.168.56.10:80/laravel/storage/${recipe.images.image}`}
+          src={`${API_HOST}/storage/${recipe.images.image}`}
           alt={recipe.title}
           className={classes.recipeImage}
         />

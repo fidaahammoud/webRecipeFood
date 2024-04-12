@@ -25,7 +25,9 @@ export default RecipesPage;
 async function loadRecipes() {
 
   const API_HOST = process.env.REACT_APP_API_URL;
-  const url = API_HOST+"/recipes?sort=-created_at";
+  console.log(API_HOST);
+  const url = API_HOST+"/api/recipes?sort=-created_at";
+  console.log(url);
   const response = await httpService.get(url,null);
   return response.data;
 

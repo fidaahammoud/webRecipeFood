@@ -37,7 +37,7 @@ export default CategoryDetailPage;
 async function loadCategory(id) {
 
   const API_HOST = process.env.REACT_APP_API_URL;
-  const url = API_HOST+"/categories/"+id;
+  const url = API_HOST+"/api/categories/"+id;
   console.log(url);
   const response = await httpService.get(url,null);
   return response;

@@ -11,10 +11,19 @@ class HttpService extends Component {
             Authorization: `Bearer ${token}`,
         },
       });
+
+      const responseBody = await response.json();
+
       if (!response.ok) {
-        throw json({ message: 'Something went wrong!' }, { status: 500 });
+        console.log(response.status);
+        if (response.status === 401 || response.status === 422) {
+          throw json({ message: responseBody.message });
+            
+        } else {
+          throw json({ message: 'Something went wrong!' }, { status: 500 });
+        }
       }
-      return await response.json();
+      return responseBody;
     } catch (error) {
       console.error('Error:', error);
       throw error;

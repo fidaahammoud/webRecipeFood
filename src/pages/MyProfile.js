@@ -37,13 +37,13 @@ export default MyProfilePage;
 
 
 async function loadChefInfo() {
-    const token = authManagerInstance.getAuthToken();;
-    const userId = authManagerInstance.getUserId();
-    console.log(token);
-    console.log(userId);
+  const token = authManagerInstance.getAuthToken();;
+  const userId = authManagerInstance.getUserId();
+  console.log(token);
+  console.log(userId);
 
   const API_HOST = process.env.REACT_APP_API_URL;
-  const url = API_HOST+"/users/"+userId;
+  const url = `${API_HOST}/api/users/${userId}/${userId}`;
   const response = await httpService.get(url,token);
 
   console.log("user details : "+response)
@@ -53,12 +53,13 @@ async function loadChefInfo() {
 }
 
 async function loadChefRecipes() {
-    const userId = authManagerInstance.getUserId();
+  const userId = authManagerInstance.getUserId();
+  const token = authManagerInstance.getAuthToken();;
 
-  const response = await fetch(`http://192.168.56.10:80/laravel/api/users/${userId}/recipes`);
-  const recipesData = await response.json();
-  console.log("recipesData : "+recipesData)
-  return recipesData.data;
+  const API_HOST = process.env.REACT_APP_API_URL;
+  const url = `${API_HOST}/api/users/${userId}/recipes?sort=-created_at`;
+  const response = await httpService.get(url,token);
+  return response.data;
 }
 
 export async function loader({ request, params }) {

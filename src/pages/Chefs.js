@@ -25,7 +25,7 @@ export default ChefsPage;
 async function loadChefs() {
 
   const API_HOST = process.env.REACT_APP_API_URL;
-  const url = API_HOST+"/users";
+  const url = API_HOST+"/api/users";
 
 
   const response = await httpService.get(url,null);

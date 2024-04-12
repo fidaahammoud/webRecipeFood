@@ -2,13 +2,13 @@ import classes from '../css/ChefInfo.module.css';
 
 
 function ChefInfo({ chef }) {
-
+  const API_HOST = process.env.REACT_APP_API_URL;
 
   return (
     <div className={classes.container}>
       <div className={classes.imageContainer}>
         <img
-          src={`http://192.168.56.10:80/laravel/storage/${chef.images.image}`}
+          src={`${API_HOST}/storage/${chef.images.image}`}
           alt={chef.username}
           className={classes.image}
         />

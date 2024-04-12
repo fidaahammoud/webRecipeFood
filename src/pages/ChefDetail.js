@@ -11,8 +11,11 @@ import ChefInfo from '../components/ChefInfo';
 import RecipesList from '../components/RecipesList';
 
 import HttpService from '../components/HttpService';
+import authManagerInstance from '../components/AuthManager';
 
 const httpService = new HttpService();
+
+
 
 function ChefDetailPage() {
   const { chef, recipes } = useRouteLoaderData("chef-detail");
@@ -38,18 +41,31 @@ export default ChefDetailPage;
 
 async function loadChefInfo(chefId) {
  
-  const API_HOST = process.env.REACT_APP_API_URL;
-  const url = API_HOST+"/users/"+chefId;
 
-  const response = await httpService.get(url,null);
+
+
+  const userId = authManagerInstance.getUserId();
+  const token = authManagerInstance.getAuthToken();;
+  const API_HOST = process.env.REACT_APP_API_URL;
+  const url = `${API_HOST}/api/users/${userId}/${chefId}`;
+  console.log(url);
+  const response = await httpService.get(url,token);
   return response;
 
 }
 
 async function loadChefRecipes(chefId) {
-  const response = await fetch(`http://192.168.56.10:80/laravel/api/users/${chefId}/recipes`);
-  const recipesData = await response.json();
-  return recipesData.data;
+
+
+
+  const userId = authManagerInstance.getUserId();
+  const token = authManagerInstance.getAuthToken();;
+  const API_HOST = process.env.REACT_APP_API_URL;
+  
+  const url = `${API_HOST}/api/users/${chefId}/recipes?sort=-created_at`;
+  console.log(url);
+  const response = await httpService.get(url,token);
+  return response.data;
 }
 
 export async function loader({ request, params }) {

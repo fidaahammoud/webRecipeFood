@@ -12,7 +12,7 @@ function DietaryFetcher() {
     const fetchData = async () => {
       try {
         const API_HOST = process.env.REACT_APP_API_URL;
-        const url = `${API_HOST}/dietaries`;
+        const url = `${API_HOST}/api/dietaries`;
 
         const response = await httpService.get(url, null);
         const data = response;

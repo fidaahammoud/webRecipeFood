@@ -28,8 +28,8 @@ function CompleteAuthPage() {
       };
 
       const API_HOST = process.env.REACT_APP_API_URL;
-      console.log("API COMPLETE PROFILE: " + `${API_HOST}/completeProfile/${userId}`);
-      const url = `${API_HOST}/completeProfile/${userId}`;
+      console.log("API COMPLETE PROFILE: " + `${API_HOST}/api/completeProfile/${userId}`);
+      const url = `${API_HOST}/api/completeProfile/${userId}`;
 
       const response = await httpService.put(url, authData, token);
       console.log(response);

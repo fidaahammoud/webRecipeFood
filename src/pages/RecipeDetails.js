@@ -11,6 +11,7 @@ import {
 import RecipeItem from '../components/RecipeItem';
 
 import HttpService from '../components/HttpService';
+import authManagerInstance from '../components/AuthManager';
 
 const httpService = new HttpService();
 
@@ -32,10 +33,12 @@ function RecipeDetailPage() {
 export default RecipeDetailPage;
 
 async function loadRecipe(id) {
-  
+  const userId = authManagerInstance.getUserId();
+  const token = authManagerInstance.getAuthToken();;
   const API_HOST = process.env.REACT_APP_API_URL;
-  const url = API_HOST+"/recipes/"+id;
-  const response = await httpService.get(url,null);
+  const url =   `${API_HOST}/api/${userId}/recipes/${id}`;
+  console.log(url);
+  const response = await httpService.get(url,token);
   return response;
 
 }

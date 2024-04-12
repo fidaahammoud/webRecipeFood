@@ -1,18 +1,18 @@
 import React from 'react';
-import { Form, Link } from 'react-router-dom'; // Removed unnecessary imports
+import { Form, Link } from 'react-router-dom'; 
 import classes from '../css/AdditionalDetailsForm.module.css';
 
-function AdditionalDetailsForm({ onSubmit }) { // Accept onSubmit prop
+function AdditionalDetailsForm({ onSubmit }) { 
   const handleSubmit = event => {
-    event.preventDefault(); // Prevent default form submission behavior
-    const form = event.target; // Get reference to the form element
-    const formData = new FormData(form); // Create FormData object from the form data
-    onSubmit(formData); // Call the onSubmit function passed as prop with form data
+    event.preventDefault(); 
+    const form = event.target; 
+    const formData = new FormData(form); 
+    onSubmit(formData);
   };
 
   return (
     <>
-      <Form method='post' className={classes.form} onSubmit={handleSubmit}> {/* Use onSubmit handler */}
+      <Form method='post' className={classes.form} onSubmit={handleSubmit}> 
         <h1>Provide Additional Details</h1>
         <p>
           <label htmlFor="username">Username</label>
@@ -26,10 +26,6 @@ function AdditionalDetailsForm({ onSubmit }) { // Accept onSubmit prop
           <label htmlFor="bio">About Me</label>
           <input id="bio" type="text" name="bio"  />
         </p>
-        {/* <p>
-          <label htmlFor="profileImage">Profile Image</label>
-          <input id="profileImage" type="file" name="profileImage" accept="image/*" required />
-        </p> */}
         <div className={classes.actions}>
           <Link to="/auth">Back to Login</Link>
           <button type="submit">Register</button>

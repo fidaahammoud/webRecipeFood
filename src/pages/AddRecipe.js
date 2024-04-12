@@ -42,8 +42,8 @@ function AddRecipeDeatilsPage() {
       console.log(recipeData);
 
       const API_HOST = process.env.REACT_APP_API_URL;
-      console.log("API ADD RECIPE : " + `${API_HOST}/recipes`);
-      const url = `${API_HOST}/recipes`;
+      console.log("API ADD RECIPE : " + `${API_HOST}/api/recipes`);
+      const url = `${API_HOST}/api/recipes`;
 
       const response = await httpService.post(url, recipeData, token);
       const newRecipeId = response.id;

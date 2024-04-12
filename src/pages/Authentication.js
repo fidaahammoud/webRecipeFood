@@ -32,7 +32,7 @@ export async function action({ request }) {
       password_confirmation: data.get('confirmPassword'),
     };
     const API_HOST = process.env.REACT_APP_API_URL;
-    const url = API_HOST +"/" + mode;
+    const url = API_HOST +"/api/" + mode;
     console.log("URL : "+ url);
 
     const response = await httpService.post(url, authData, null);
