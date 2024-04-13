@@ -102,10 +102,14 @@ class HttpService extends Component {
           Authorization: `Bearer ${token}`,
         },
       });
+      const responseBody = await response.json();
+
       if (!response.ok) {
+        console.log("error when delete");
+
         throw json({ message: 'Something went wrong!' }, { status: 500 });
       }
-      return await response.json();
+      return responseBody;
     } catch (error) {
       console.error('Error:', error);
       throw error;

@@ -1,16 +1,27 @@
 import React, { Fragment, useRef, useState } from 'react';
 import authManagerInstance from '../components/AuthManager';
+import classes from '../css/RecipeItem.module.css';
 
 const UploadImageToDB = ({ onImageUpload }) => {
-  const [image, setImage] = useState();
+  const [image, setImage] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
   const imageRef = useRef();
 
   const fileSelectHandler = event => {
-    setImage(event.target.files[0]);
+    const selectedImage = event.target.files[0];
+    setImage(selectedImage);
+
+    if (selectedImage) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
+      };
+      reader.readAsDataURL(selectedImage);
+    }
   };
 
   const handleSubmit = () => {
-    const token = authManagerInstance.getAuthToken();;
+    const token = authManagerInstance.getAuthToken();
     const userId = authManagerInstance.getUserId();
 
     const formData = new FormData();
@@ -28,7 +39,7 @@ const UploadImageToDB = ({ onImageUpload }) => {
     })
     .then(response => response.json())
     .then(data => {
-      console.log("Data image id : "+data.image_id );
+      console.log("Data image id : "+data.image_id);
       // Pass the imageId back to the parent component
       onImageUpload(data.image_id);
     })
@@ -38,15 +49,13 @@ const UploadImageToDB = ({ onImageUpload }) => {
   };
 
   return (
-    <Fragment>
-      <div>
-        <input type="file" name="image" ref={imageRef} onChange={fileSelectHandler} />
-        <br />
-        <button onClick={handleSubmit}>Send</button>
-      </div>
+    <div className="upload-container">
+      <input type="file" name="image" ref={imageRef} onChange={fileSelectHandler} />
       <br />
-      <img src={image} width={500} />
-    </Fragment>
+      <button onClick={handleSubmit}>Submit image</button>
+      <br />
+      {imagePreview && <img src={imagePreview} width={500} alt="Preview" />}
+    </div>
   );
 }
 

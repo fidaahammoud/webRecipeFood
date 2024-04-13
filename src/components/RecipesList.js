@@ -1,9 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import classes from '../css/RecipesList.module.css';
+import { faThumbsUp } from '@fortawesome/free-solid-svg-icons'; 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Utils } from './Utils'; 
 
 function RecipesList({ recipes }) {
   const API_HOST = process.env.REACT_APP_API_URL;
+  const { getTimeDifference } = Utils();
 
   return (
     <div className={classes.recipes}>
@@ -32,16 +36,18 @@ function RecipesList({ recipes }) {
                 </div>
                 <div className={classes.recipeDetails}>
                   <div className={classes.likesContainer}>
-                    <i className={`fa fa-thumbs-o-up ${classes.likesIcon}`} />
-                    <span className={classes.likesText}>{recipe.totalLikes}</span>
+                  <FontAwesomeIcon icon={faThumbsUp}   color={'white'}  className={classes.likeIcon}/>
+                 <span className={classes.likesText}>{recipe.totalLikes}</span>
                   </div>
+
+
                   <div className={classes.ratingContainer}>
                     <i className={`fa fa-star ${classes.ratingIcon}`} />
                     <span className={classes.ratingText}>{recipe.avrgRating}</span>
                   </div>
                 </div>
-                <span className={classes.createdAt}>{recipe.createdAt}</span>
-              </Link>
+                <span className={classes.createdAt}>{getTimeDifference(recipe.created_at)}</span>
+                </Link>
             </div>
           ))
         )}

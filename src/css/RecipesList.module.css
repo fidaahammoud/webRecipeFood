@@ -84,14 +84,15 @@
   align-items: center;
 }
 
-.likesIcon,
+.likeIcon,
 .ratingIcon {
-  margin-right: 5px;
+  margin-left: 10px;
 }
 
 .likesText,
 .ratingText {
   font-size: 16px;
+  margin-left: 10px;
 }
 
 .createdAt {

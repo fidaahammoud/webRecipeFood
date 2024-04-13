@@ -41,9 +41,6 @@ export default ChefDetailPage;
 
 async function loadChefInfo(chefId) {
  
-
-
-
   const userId = authManagerInstance.getUserId();
   const token = authManagerInstance.getAuthToken();;
   const API_HOST = process.env.REACT_APP_API_URL;

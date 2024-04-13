@@ -1,18 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleDown, faAngleUp, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons'; 
+import { faAngleDown, faAngleUp, faEdit, faTrash, faThumbsUp } from '@fortawesome/free-solid-svg-icons'; 
 import classes from '../css/RecipeItem.module.css';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import HttpService from '../components/HttpService';
 import authManagerInstance from '../components/AuthManager';
-import verificationIcon from "../images/Verification-Logo.png";  // Import the verification icon
+import verificationIcon from "../images/Verification-Logo.png";  
 
 const httpService = new HttpService();
 
 function RecipeItem({ recipe }) {
   const [showIngredients, setShowIngredients] = useState(false);
   const [showSteps, setShowSteps] = useState(false);
+  const [isLiked, setIsLiked] = useState(recipe.isLiked);
+  const [totalLikes, setTotalLikes] = useState(recipe.totalLikes);
+
+  
+
   const loggedInUser = authManagerInstance.getUserId();
   const navigate = useNavigate(); 
 
@@ -26,12 +31,21 @@ function RecipeItem({ recipe }) {
     setShowSteps(!showSteps);
   };
 
+  useEffect(() => {
+    displayEditAndDelete();
+  },[]);
   const displayEditAndDelete = () => {
+    console.log(loggedInUser+" loggedInUser");
+    console.log(recipe.user.id+" recipe. user .id");
+
     if (loggedInUser === recipe.user.id) {
       return (
         <div className={classes.editDelete}>
-          <button onClick={() => handleEdit(recipe.id)}><FontAwesomeIcon icon={faEdit} /></button>
-          <button onClick={() => handleDelete(recipe.id)}><FontAwesomeIcon icon={faTrash} /></button>
+           <Link to={`/editRecipe/${recipe.id}`} className={classes.creatorLink}>
+           <button onClick={() => handleEdit(recipe.id)}><FontAwesomeIcon icon={faEdit} /></button>
+           </Link>
+           
+          <button onClick={handleDelete}><FontAwesomeIcon icon={faTrash} /></button>
         </div>
       );
     }
@@ -39,17 +53,38 @@ function RecipeItem({ recipe }) {
 
   const handleEdit = (recipeId) => {
     console.log("Editing recipe with ID:", recipeId);
+    navigate('editRecipe');
+
   };
 
-  const handleDelete = async (recipeId) => {
-    console.log("Deleting recipe with ID:", recipeId);
+  const handleDelete = async () => {
+    console.log("Deleting recipe with ID:", recipe.id);
     const token = authManagerInstance.getAuthToken();;
 
     const API_HOST = process.env.REACT_APP_API_URL;
-    const url = `${API_HOST}/recipes/delete/${recipeId}`;
-    await httpService.delete(url,token); 
+    const url = `${API_HOST}/api/recipes/delete/${recipe.id}`;
+    console.log(url);
+    const httpService = new HttpService();
+
+    const response = await httpService.delete(url,token); 
+    console.log(response);
     navigate('/');
   };
+
+  const handleLikePress = async () => {
+    const token = authManagerInstance.getAuthToken();;
+    const userId = authManagerInstance.getUserId();
+    console.log(`${API_HOST}/api/${userId}/${recipe.id}/updateStatusLike`);
+    try {
+      const httpService = new HttpService();
+      const response = await httpService.put(`${API_HOST}/api/${userId}/${recipe.id}/updateStatusLike`, null, token);
+      setTotalLikes(response.nbOfLikes);
+      setIsLiked(!isLiked);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
 
   return (
     <article className={classes.recipeContainer}>
@@ -83,6 +118,11 @@ function RecipeItem({ recipe }) {
         <div className={classes.recipeTitle}>
           <h1>{recipe.title}</h1>
           {displayEditAndDelete()}
+        </div>
+
+        <div className={classes.recipeActions}>
+          <FontAwesomeIcon icon={faThumbsUp} onClick={handleLikePress}  color={isLiked ? 'blue' : 'white'}  className={classes.likeIcon}/>
+          <span className={classes.likesCount}>{totalLikes}</span>
         </div>
 
         <p>Description : {recipe.description}</p>

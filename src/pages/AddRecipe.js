@@ -12,9 +12,7 @@ function AddRecipeDeatilsPage() {
   const [imageId, setImageId] = useState(null);
   const [ingredients, setIngredients] = useState([{ name: '', unit: '' }]);
   const [steps, setSteps] = useState(['']);
-  const [drinks, setdrinks] = useState([]);
    
-
   const navigate = useNavigate(); 
   
   const handleSubmit = async (formData,steps) => {
@@ -64,7 +62,6 @@ function AddRecipeDeatilsPage() {
 
   return (
     <>
-      <UploadImageToDB onImageUpload={handleImageUpload} />
       <AddRecipeFormPage
         onSubmit={handleSubmit}
         ingredients={ingredients}
@@ -73,6 +70,8 @@ function AddRecipeDeatilsPage() {
         
         setSteps={setSteps}
       />
+      <UploadImageToDB onImageUpload={handleImageUpload} />
+
     </>
   );
 }
