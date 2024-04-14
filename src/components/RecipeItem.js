@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleDown, faAngleUp, faEdit,faStar, faTrash, faThumbsUp,faPaperPlane  } from '@fortawesome/free-solid-svg-icons'; 
+import { faAngleDown, faAngleUp, faEdit,faStar, faTrash, faThumbsUp,faPaperPlane, faHeart,faCheck  } from '@fortawesome/free-solid-svg-icons'; 
 import classes from '../css/RecipeItem.module.css';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
@@ -18,10 +18,14 @@ function RecipeItem({ recipe }) {
   const [averageRating, setAverageRating] = useState(recipe.avrgRating);
   const [userRate, setUserRate] = useState(0);
   const [isRated, setIsRated] = useState(recipe.isRated);
+  const [rating, setRating] = useState(recipe.rating);
+
   const [comments, setComments] = useState(recipe.comments);
   const [comment, setComment] = useState('');
   const [error, setError] = useState(null);
+  const [isFavorite, setIsFavorite] = useState(recipe.isFavorite);
 
+  
   const { getTimeDifference } = Utils();
 
   const loggedInUser = authManagerInstance.getUserId();
@@ -29,6 +33,7 @@ function RecipeItem({ recipe }) {
 
   const API_HOST = process.env.REACT_APP_API_URL;
   const token = authManagerInstance.getAuthToken();
+  const userId = authManagerInstance.getUserId();
 
   const toggleIngredients = () => {
     setShowIngredients(!showIngredients);
@@ -58,6 +63,10 @@ function RecipeItem({ recipe }) {
   };
 
   useEffect(() => {
+
+    if (isRated) {
+      setUserRate(recipe.rating);
+    }
     displayEditAndDelete();
   }, []);
 
@@ -94,7 +103,6 @@ function RecipeItem({ recipe }) {
   };
 
   const handleLikePress = async () => {
-    const userId = authManagerInstance.getUserId();
     try {
       const httpService = new HttpService();
       const response = await httpService.put(`${API_HOST}/api/${userId}/${recipe.id}/updateStatusLike`, null, token);
@@ -106,7 +114,6 @@ function RecipeItem({ recipe }) {
   };
 
   const handleRatePress = async () => {
-    const userId = authManagerInstance.getUserId();
     try {
       const httpService = new HttpService();
       const response = await httpService.put(`${API_HOST}/api/${userId}/${recipe.id}/${userRate}/updateStatusRate`, null, token);
@@ -116,6 +123,28 @@ function RecipeItem({ recipe }) {
       console.log(error.message);
     }
   };
+  const handleFavoritePress = async (recipeId) => {
+    try {
+      const httpService = new HttpService();
+      const response = await httpService.put(`${API_HOST}/api/${userId}/${recipe.id}/updateStatusFavorite`, null, token);
+      setIsFavorite(!isFavorite);
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+
+  const handleStarClick = (rating) => {
+    setUserRate(rating);
+  };
+  
+  const getStarIconName = (rating) => {
+    if (userRate >= rating) {
+      return "gold";
+    } else {
+      return "grey";
+    }
+  };
+  
 
   return (
     <article className={classes.recipeContainer}>
@@ -206,6 +235,14 @@ function RecipeItem({ recipe }) {
             <FontAwesomeIcon icon={faStar} onClick={handleRatePress} color={'gold'} className={classes.rateIcon} />
             <span className={classes.averageRating}>{averageRating}</span>
           </div>
+
+          <div>
+            <FontAwesomeIcon icon={faHeart } onClick={handleFavoritePress} color={isFavorite ? 'red' : 'white'} className={classes.favoriteIcon} />
+            <span className={classes.favoriteStatus}>
+              {isFavorite ? "Remove from favorite" : "Add to favorite"}
+            </span>
+          </div>
+
         </div>
 
         <p>Description : {recipe.description}</p>
@@ -237,6 +274,27 @@ function RecipeItem({ recipe }) {
             ))}
           </ol>
         )}
+
+          <div className={classes.title}>Add your Rate : {userRate}</div>
+
+          <div className={classes.rateIconUserIcon}>
+            {[1, 2, 3, 4, 5].map((rating) => (
+              <FontAwesomeIcon
+                key={rating}
+                icon={faStar}
+                onClick={() => handleStarClick(rating)}
+                color={getStarIconName(rating)}
+                className={classes.rateIcon}
+              />
+            ))}
+           <button onClick={handleRatePress} className={classes.submitButton} disabled={userRate <= 0}>
+              Submit Rating
+            </button>
+    
+          </div>
+
+
+
       </div>
     </article>
   );

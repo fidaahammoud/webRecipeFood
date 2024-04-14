@@ -146,3 +146,22 @@
   margin-left: 70px;
 
 }
+
+.favoriteStatus {
+  margin-left: 10px;
+}
+
+
+.submitRate {
+  margin-left: 10px; 
+  cursor: pointer;
+}
+
+
+.rateIconUserIcon{
+  margin-top: 10px;
+}
+.submitButton{
+  color: rgb(227, 219, 219);
+  background-color: rgb(107, 90, 90);
+}
