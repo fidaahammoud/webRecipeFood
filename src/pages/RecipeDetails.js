@@ -40,6 +40,8 @@ async function loadRecipe(id) {
   console.log(url);
   const response = await httpService.get(url,token);
   if(response.isActive === 1){
+    console.log("average rating: "+response.avrgRating);
+    console.log(response.comments);
     return response;
   }
   else{

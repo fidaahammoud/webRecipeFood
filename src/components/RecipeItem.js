@@ -1,27 +1,34 @@
 import React, { useState,useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleDown, faAngleUp, faEdit, faTrash, faThumbsUp } from '@fortawesome/free-solid-svg-icons'; 
+import { faAngleDown, faAngleUp, faEdit,faStar, faTrash, faThumbsUp,faPaperPlane  } from '@fortawesome/free-solid-svg-icons'; 
 import classes from '../css/RecipeItem.module.css';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import HttpService from '../components/HttpService';
 import authManagerInstance from '../components/AuthManager';
 import verificationIcon from "../images/Verification-Logo.png";  
+import { Utils } from './Utils'; 
 
-const httpService = new HttpService();
 
 function RecipeItem({ recipe }) {
   const [showIngredients, setShowIngredients] = useState(false);
   const [showSteps, setShowSteps] = useState(false);
   const [isLiked, setIsLiked] = useState(recipe.isLiked);
   const [totalLikes, setTotalLikes] = useState(recipe.totalLikes);
+  const [averageRating, setAverageRating] = useState(recipe.avrgRating);
+  const [userRate, setUserRate] = useState(0);
+  const [isRated, setIsRated] = useState(recipe.isRated);
+  const [comments, setComments] = useState(recipe.comments);
+  const [comment, setComment] = useState('');
+  const [error, setError] = useState(null);
 
-  
+  const { getTimeDifference } = Utils();
 
   const loggedInUser = authManagerInstance.getUserId();
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const API_HOST = process.env.REACT_APP_API_URL;
+  const token = authManagerInstance.getAuthToken();
 
   const toggleIngredients = () => {
     setShowIngredients(!showIngredients);
@@ -31,20 +38,36 @@ function RecipeItem({ recipe }) {
     setShowSteps(!showSteps);
   };
 
+  const handleCommentChange = (e) => {
+    setComment(e.target.value);
+  };
+
+  const handleCommentSubmit = async () => {
+    const data = {
+      content: comment
+    };
+
+    try {
+      const httpService = new HttpService();
+      const response = await httpService.post(`${API_HOST}/api/recipes/${recipe.id}/comments`, data, token);
+      setComments(response.data.comments);
+      setComment('');
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+
   useEffect(() => {
     displayEditAndDelete();
-  },[]);
-  const displayEditAndDelete = () => {
-    console.log(loggedInUser+" loggedInUser");
-    console.log(recipe.user.id+" recipe. user .id");
+  }, []);
 
+  const displayEditAndDelete = () => {
     if (loggedInUser === recipe.user.id) {
       return (
         <div className={classes.editDelete}>
-           <Link to={`/editRecipe/${recipe.id}`} className={classes.creatorLink}>
-           <button onClick={() => handleEdit(recipe.id)}><FontAwesomeIcon icon={faEdit} /></button>
-           </Link>
-           
+          <Link to={`/editRecipe/${recipe.id}`} className={classes.creatorLink}>
+            <button onClick={() => handleEdit(recipe.id)}><FontAwesomeIcon icon={faEdit} /></button>
+          </Link>
           <button onClick={handleDelete}><FontAwesomeIcon icon={faTrash} /></button>
         </div>
       );
@@ -54,27 +77,24 @@ function RecipeItem({ recipe }) {
   const handleEdit = (recipeId) => {
     console.log("Editing recipe with ID:", recipeId);
     navigate('editRecipe');
-
   };
 
   const handleDelete = async () => {
     console.log("Deleting recipe with ID:", recipe.id);
-    const token = authManagerInstance.getAuthToken();;
-
-    const API_HOST = process.env.REACT_APP_API_URL;
     const url = `${API_HOST}/api/recipes/delete/${recipe.id}`;
-    console.log(url);
-    const httpService = new HttpService();
 
-    const response = await httpService.delete(url,token); 
-    console.log(response);
-    navigate('/');
+    try {
+      const httpService = new HttpService();
+      const response = await httpService.delete(url, token);
+      console.log(response);
+      navigate('/');
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   const handleLikePress = async () => {
-    const token = authManagerInstance.getAuthToken();;
     const userId = authManagerInstance.getUserId();
-    console.log(`${API_HOST}/api/${userId}/${recipe.id}/updateStatusLike`);
     try {
       const httpService = new HttpService();
       const response = await httpService.put(`${API_HOST}/api/${userId}/${recipe.id}/updateStatusLike`, null, token);
@@ -85,11 +105,24 @@ function RecipeItem({ recipe }) {
     }
   };
 
+  const handleRatePress = async () => {
+    const userId = authManagerInstance.getUserId();
+    try {
+      const httpService = new HttpService();
+      const response = await httpService.put(`${API_HOST}/api/${userId}/${recipe.id}/${userRate}/updateStatusRate`, null, token);
+      setAverageRating(response.avrgRating);
+      setIsRated(!isRated);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
   return (
     <article className={classes.recipeContainer}>
       <div className={classes.recipe}>
+        {/* User info and image */}
         <Link to={`/chefs/${recipe.user.id}`} className={classes.creatorLink}>
+          {/* User info */}
           <div className={classes.userInfo}>
             <img
               src={`${API_HOST}/storage/${recipe.user.images.image}`}
@@ -108,21 +141,71 @@ function RecipeItem({ recipe }) {
             </div>
           </div>
         </Link>
+        {/* Recipe image */}
         <img
           src={`${API_HOST}/storage/${recipe.images.image}`}
           alt={recipe.title}
           className={classes.recipeImage}
         />
+        {/* Display comments */}
+        <div className={classes.commentsContainer}>
+          <h2>Comments</h2>
+          <ul className={classes.commentsList}>
+            {comments.map(comment => (
+              <li key={comment.id} className={classes.commentItem}>
+                <div className={classes.commentUserInfo}>
+                  <img
+                    src={`${API_HOST}/storage/${comment.user.images.image}`}
+                    alt={comment.user.name}
+                    className={classes.commentUserImage}
+                  />
+                  <span className={classes.commentUserName}>{comment.user.name}</span>
+                </div>
+                <div className={classes.commentcontainer}>
+                  <p className={classes.commentContent}>{comment.content}</p>
+                  <span className={classes.createdAt}> - {getTimeDifference(comment.created_at)} - </span>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+         {/* Add comment form */}
+         <form onSubmit={handleCommentSubmit} className={classes.commentForm} >
+            <input
+              type="text"
+              placeholder="Add a comment..."
+              value={comment}
+              onChange={handleCommentChange}
+              className={classes.commentInput}
+            />
+            <button type="submit" className={classes.commentButton}>
+              {/* send */}
+              <FontAwesomeIcon icon={faPaperPlane} onClick={handleCommentChange} color='grey' />
+
+            </button>
+          </form>
+          {error && <p className={classes.error}>{error}</p>}
+
       </div>
+
+      {/* Recipe details */}
       <div className={classes.recipeDetails}>
+        {/* Recipe title and edit/delete buttons */}
         <div className={classes.recipeTitle}>
           <h1>{recipe.title}</h1>
           {displayEditAndDelete()}
         </div>
-
         <div className={classes.recipeActions}>
-          <FontAwesomeIcon icon={faThumbsUp} onClick={handleLikePress}  color={isLiked ? 'blue' : 'white'}  className={classes.likeIcon}/>
-          <span className={classes.likesCount}>{totalLikes}</span>
+          <div>
+            <FontAwesomeIcon icon={faThumbsUp} onClick={handleLikePress} color={isLiked ? 'blue' : 'white'} className={classes.likeIcon}/>
+            <span className={classes.likesCount}>{totalLikes}</span>
+          </div>
+
+          <div>
+            <FontAwesomeIcon icon={faStar} onClick={handleRatePress} color={'gold'} className={classes.rateIcon} />
+            <span className={classes.averageRating}>{averageRating}</span>
+          </div>
         </div>
 
         <p>Description : {recipe.description}</p>
@@ -130,7 +213,7 @@ function RecipeItem({ recipe }) {
         <p>Dietary Preference: {recipe.dietary.name}</p>
         <p>Preparation Time : {recipe.preparationTime}</p>
         <p>Chefs comment: {recipe.comment}</p>
-
+        {/* Ingredients */}
         <div className={classes.sectionHeader}>
           <h2 className={classes.title}>Ingredients</h2>
           <FontAwesomeIcon icon={showIngredients ? faAngleUp : faAngleDown} onClick={toggleIngredients} />
@@ -142,7 +225,7 @@ function RecipeItem({ recipe }) {
             ))}
           </ol>
         )}
-
+        {/* Steps */}
         <div className={classes.sectionHeader}>
           <h2 className={classes.title}>Steps</h2>
           <FontAwesomeIcon icon={showSteps ? faAngleUp : faAngleDown} onClick={toggleSteps} />

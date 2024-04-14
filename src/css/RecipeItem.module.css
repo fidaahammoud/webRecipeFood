@@ -16,9 +16,10 @@
 }
 
 .recipeImage {
-  width: 80%; 
-  border-radius: 4px;
-  margin-left: 20px;
+  width: 60%; 
+  height: 45%;
+  border-radius: 20px;
+  margin-left: 70px;
 }
 
 .userInfo {
@@ -79,9 +80,8 @@
 }
 
 .recipeActions {
-  display: flex;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   margin-top: 10px;
 }
 
@@ -92,4 +92,57 @@
 .likesCount {
   font-size: 16px;
   color: #e4dddd;
+}
+.rateIcon {
+  margin-right: 10px;  
+}
+
+.averageRating {
+  font-size: 16px;
+  color: #e4dddd;
+}
+
+.commentsContainer{
+  margin-left: 70px;
+
+}
+.commentItem{
+  margin-bottom: 15px;
+}
+.commentUserInfo{
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px; 
+  margin-left: 10px; 
+  text-transform: capitalize; 
+}
+
+.commentUserImage {
+  width: 20px; 
+  height: 20px; 
+  border-radius: 60%;
+  margin-right: 10px;
+}
+
+.commentcontainer {
+  display: flex;
+  align-items: center;
+  margin-left: 15px;
+}
+
+.commentContent {
+  text-transform: capitalize; 
+  font-size: 0.8rem;
+}
+
+.createdAt {
+  font-size: 12px;
+  color: gray;
+  margin-top: 5px;
+  margin-left: 10px;
+}
+
+.commentForm{
+  margin-left: 70px;
+
 }
