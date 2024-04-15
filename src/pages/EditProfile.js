@@ -4,12 +4,18 @@ import UploadImageToDB from '../components/ImageUpload.js';
 import { useNavigate } from 'react-router-dom'; 
 import authManagerInstance from '../components/AuthManager';
 import EditProfileForm from '../components/EditProfileForm.js';
+import Toast from '../components/Toast'; 
+
+
+import 'react-toastify/dist/ReactToastify.css';
 
 const httpService = new HttpService();
 
 function EditProfilePage() {
   const [imageId, setImageId] = useState(null);
-  
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
+
   const navigate = useNavigate(); 
 
   const handleSubmit = async (formData,imageIDForm) => {
@@ -40,12 +46,14 @@ function EditProfilePage() {
       console.log("API UPDATE PROFILE: " + `${API_HOST}/api/updatePersonalInformation/${userId}`);
       const url = `${API_HOST}/api/updatePersonalInformation/${userId}`;
 
-      const response = await httpService.put(url, authData, token);
+      const response = await httpService.put(url, authData, token,true);
+      if (response && response.message === 'Personal information updated successfully' ) {
+        setToastMessage('Personal information updated successfully');
+        setShowToast(true);
+        setTimeout(navigateToHome, 2000);
+      }
       console.log(response);
-
-      navigate('/');
-
-
+      
     } catch (error) {
       console.error('Error completing profile:', error);
     }
@@ -55,10 +63,17 @@ function EditProfilePage() {
     setImageId(imageId);
   };
 
+  function navigateToHome() {
+    navigate('/');
+}
+
   return (
     <>
       <UploadImageToDB onImageUpload={handleImageUpload} imageId={imageId}   />
       <EditProfileForm onSubmit={handleSubmit} />
+      {showToast && (
+      <Toast message={toastMessage}/>
+      )}
     </>
   );
 }
