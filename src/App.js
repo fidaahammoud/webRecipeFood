@@ -25,6 +25,8 @@ import { action as logoutAction } from './pages/Logout';
 import AddRecipeFormPage from './components/AddRecipeForm.js';
 import AddRecipeDeatilsPage from './pages/AddRecipe';
 import EditRecipeDetailsPage from './pages/EditRecipe';
+import EditProfilePage from './pages/EditProfile';
+
 
 import authManagerInstance from './components/AuthManager';
 const isAuthenticated = authManagerInstance.getIsAuthenticated();
@@ -92,7 +94,6 @@ const router = createBrowserRouter([
       {
         path: 'profile',
         id: 'myPresonal-detail',
-       // element: <MyProfilePage />,
         element:  <MyProfilePage /> ,
         loader: profileDetailLoader,
       },
@@ -100,14 +101,20 @@ const router = createBrowserRouter([
       {
         path: 'addRecipe',
         element: <AddRecipeDeatilsPage/>,
-       // loader: profileDetailLoader,
       },
       {
         path: 'editRecipe/:recipeId',
         id: 'edit-recipe',
         element: <EditRecipeDetailsPage/>,
-       // loader: profileDetailLoader,
       },
+
+
+      {
+        path: 'editProfile/:userId',
+        id: 'edit-profile',
+        element: <EditProfilePage/>,
+      },
+
 
 
       {

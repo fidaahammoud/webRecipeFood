@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom'; // Added Link import
 import classes from '../css/ChefInfo.module.css';
 import verificationIcon from "../images/Verification-Logo.png";
 import authManagerInstance from '../components/AuthManager';
@@ -57,6 +58,15 @@ function ChefInfo({ chef }) {
             <button onClick={handleFollowPress} className={classes.followButton}>
               {followStatus}
             </button>
+          )}
+        </div>
+        <div className={classes.editProfile}>
+          {loggedInUserId == chef.id && (
+            <Link to={`/editProfile/${chef.id}`} > 
+              <button className={classes.editProfileButton}>
+                Edit Profile
+              </button>
+            </Link>
           )}
         </div>
       </div>

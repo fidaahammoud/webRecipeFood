@@ -79,9 +79,11 @@ class HttpService extends Component {
         console.log('Response body:', responseBody);
   
         if (response.status === 400) {
+          console.log("status 400");
           const errorMessage = Array.isArray(responseBody.message) ? responseBody.message.join(', ') : responseBody.message;
           console.log(errorMessage);
-        } else {
+          throw json({ message: errorMessage});
+        }  else {
           throw json({ message: 'Something went wrong!' }, { status: 500 });
         }
       }

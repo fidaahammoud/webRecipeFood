@@ -46,12 +46,13 @@ function EditRecipeDetailsPage() {
             const url = `${API_HOST}/api/recipes/${recipeId}`;
     
             const response = await httpService.put(url, recipeData, token);
-    
+            console.log(response);
             const newRecipeId = response.id;
             console.log("NEW RECIPE ID : " + newRecipeId);
             console.log(response);
-    
-            navigate('/');
+            if (response && response.message === 'Recipe details updated successfully' ) {
+                navigate('/');
+            }
     
         } catch (error) {
             console.error('Error updating a recipe:', error);
