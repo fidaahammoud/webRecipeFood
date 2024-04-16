@@ -64,9 +64,6 @@ function RecipeItem({ recipe }) {
 
   useEffect(() => {
 
-    if (isRated) {
-      setUserRate(recipe.rating);
-    }
     displayEditAndDelete();
   }, []);
 
@@ -117,12 +114,23 @@ function RecipeItem({ recipe }) {
     try {
       const httpService = new HttpService();
       const response = await httpService.put(`${API_HOST}/api/${userId}/${recipe.id}/${userRate}/updateStatusRate`, null, token);
-      setAverageRating(response.avrgRating);
-      setIsRated(!isRated);
+      console.log("Response average rating:", response.avgRating);  
+      const formattedRating = parseFloat(response.avgRating).toFixed(1);  
+      console.log("Formatted rating:", formattedRating);  
+      setAverageRating(formattedRating); 
+
     } catch (error) {
       console.log(error.message);
     }
   };
+
+  useEffect(() => {
+    if (isRated) {
+      setUserRate(recipe.rating);  
+    }
+  }, [isRated]);
+
+
   const handleFavoritePress = async (recipeId) => {
     try {
       const httpService = new HttpService();

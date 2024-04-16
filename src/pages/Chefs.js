@@ -4,9 +4,9 @@ import { useLoaderData, json, defer, Await } from 'react-router-dom';
 import ChefsList from '../components/ChefsList';
 
 import HttpService from '../components/HttpService';
+import authManagerInstance from '../components/AuthManager';
 
 const httpService = new HttpService();
-
 
 function ChefsPage() {
   const { chefs } = useLoaderData();
@@ -23,20 +23,18 @@ function ChefsPage() {
 export default ChefsPage;
 
 async function loadChefs() {
-
   const API_HOST = process.env.REACT_APP_API_URL;
-  const url = API_HOST+"/api/users";
+  const url = `${API_HOST}/api/users`;
+  
+  const loggedInUserId = authManagerInstance.getUserId(); 
 
-
-  const response = await httpService.get(url,null);
-  return response.data;
-
+  const response = await httpService.get(url, null);
+  const filteredChefs = response.data.filter(chef => chef.id !== loggedInUserId);
+  return filteredChefs;
 }
 
 export function loader() {
-    return defer({
-      chefs: loadChefs(), 
-    });
+  return defer({
+    chefs: loadChefs(), 
+  });
 }
-
-  

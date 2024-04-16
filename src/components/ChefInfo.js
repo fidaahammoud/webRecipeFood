@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom'; // Added Link import
+import { Link } from 'react-router-dom';
 import classes from '../css/ChefInfo.module.css';
 import verificationIcon from "../images/Verification-Logo.png";
 import authManagerInstance from '../components/AuthManager';
@@ -54,19 +54,18 @@ function ChefInfo({ chef }) {
           <p className={classes.totalFollowers}>{totalFollowers}</p>
         </div>
         <div>
-          {loggedInUserId !== chef.id && (
-            <button onClick={handleFollowPress} className={classes.followButton}>
-              {followStatus}
-            </button>
-          )}
-        </div>
-        <div className={classes.editProfile}>
-          {loggedInUserId == chef.id && (
+          {loggedInUserId == chef.id ? (
             <Link to={`/editProfile/${chef.id}`} > 
-              <button className={classes.editProfileButton}>
-                Edit Profile
-              </button>
+                  <button className={classes.editProfileButton}>
+                    Edit Profile
+                  </button>
             </Link>
+
+          ) : (
+            <button onClick={handleFollowPress} className={classes.followButton}>
+            {followStatus}
+          </button>
+
           )}
         </div>
       </div>
