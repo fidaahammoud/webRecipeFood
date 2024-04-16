@@ -5,8 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import authManagerInstance from '../components/AuthManager';
 import EditProfileForm from '../components/EditProfileForm.js';
 import Toast from '../components/Toast'; 
-
-
 import 'react-toastify/dist/ReactToastify.css';
 
 const httpService = new HttpService();
@@ -47,7 +45,7 @@ function EditProfilePage() {
       const url = `${API_HOST}/api/updatePersonalInformation/${userId}`;
 
       const response = await httpService.put(url, authData, token,true);
-      if (response && response.message === 'Personal information updated successfully' ) {
+      if (response && response.message === 'success' ) {
         setToastMessage('Personal information updated successfully');
         setShowToast(true);
         setTimeout(navigateToHome, 2000);

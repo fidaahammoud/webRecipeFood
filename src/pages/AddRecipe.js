@@ -6,6 +6,11 @@ import authManagerInstance from '../components/AuthManager';
 import UploadImageToDB from '../components/ImageUpload.js';
 import { useNavigate } from 'react-router-dom'; 
 
+import Toast from '../components/Toast'; 
+import 'react-toastify/dist/ReactToastify.css';
+
+
+
 const httpService = new HttpService();
 
 function AddRecipeDeatilsPage() {
@@ -13,6 +18,9 @@ function AddRecipeDeatilsPage() {
   const [ingredients, setIngredients] = useState([{ name: '', unit: '' }]);
   const [steps, setSteps] = useState(['']);
    
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
+
   const navigate = useNavigate(); 
   
   const handleSubmit = async (formData,steps) => {
@@ -48,8 +56,12 @@ function AddRecipeDeatilsPage() {
       console.log("NEW RECIPE ID : "+newRecipeId);
       console.log(response);
 
-      navigate('/');
-
+      console.log(response.message);
+      if (response && response.message === 'success' ) {
+        setToastMessage('Recipe added successfully');
+        setShowToast(true);
+        setTimeout(navigateToHome, 2000);
+      }
 
     } catch (error) {
       console.error('Error adding a recipe:', error);
@@ -59,6 +71,10 @@ function AddRecipeDeatilsPage() {
   const handleImageUpload = (imageId) => {
     setImageId(imageId);
   };
+
+  function navigateToHome() {
+    navigate('/');
+}
 
   return (
     <>
@@ -71,6 +87,11 @@ function AddRecipeDeatilsPage() {
         setSteps={setSteps}
       />
       <UploadImageToDB onImageUpload={handleImageUpload} />
+
+      {showToast && (
+      <Toast message={toastMessage}/>
+      )}
+
 
     </>
   );
