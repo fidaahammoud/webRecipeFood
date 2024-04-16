@@ -1,20 +1,27 @@
 import React, { useState,useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link,useParams  } from 'react-router-dom';
 import classes from '../css/RecipesList.module.css';
 import { faThumbsUp , faSearch} from '@fortawesome/free-solid-svg-icons'; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { Utils } from './Utils'; 
 
-function RecipesList({ recipes }) {
+function SearchedRecipes({ recipes }) {
   const API_HOST = process.env.REACT_APP_API_URL;
   const { getTimeDifference } = Utils();
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const { searchTerm: routeSearchTerm } = useParams();
+
+  useEffect(() => {
+    setSearchTerm(routeSearchTerm);
+  }, [routeSearchTerm]);
+
 
   return (
     <div className={classes.recipes}>
-
       <div className={classes.title}>
-        <h1>All Recipes</h1>
+        <h1>{searchTerm}</h1>
       </div>
       <div className={classes.list}>
         {recipes.length === 0 ? (
@@ -58,4 +65,4 @@ function RecipesList({ recipes }) {
   );
 }
 
-export default RecipesList;
+export default SearchedRecipes;

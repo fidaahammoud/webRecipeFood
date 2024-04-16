@@ -63,7 +63,6 @@ function RecipeItem({ recipe }) {
   };
 
   useEffect(() => {
-
     displayEditAndDelete();
   }, []);
 

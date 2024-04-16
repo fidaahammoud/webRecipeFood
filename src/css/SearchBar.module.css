@@ -1,0 +1,23 @@
+.search {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-left: 100px;
+  }
+  
+  .searchInput {
+    padding: 0.5rem;
+    border: 1px solid var(--color-gray-600);
+    border-radius: 4px;
+  }
+  
+  .searchIcon {
+    cursor: pointer;
+    margin-left: 10px;
+  }
+  
+  .searchLink {
+    text-decoration: none;
+    color: inherit;
+  }
+  

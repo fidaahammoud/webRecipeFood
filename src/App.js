@@ -22,10 +22,11 @@ import CompleteAuthPage from './pages/CompleteAuth';
 import MyProfilePage, { loader as profileDetailLoader } from './pages/MyProfile';
 import { action as logoutAction } from './pages/Logout';
 
-import AddRecipeFormPage from './components/AddRecipeForm.js';
 import AddRecipeDeatilsPage from './pages/AddRecipe';
 import EditRecipeDetailsPage from './pages/EditRecipe';
 import EditProfilePage from './pages/EditProfile';
+import SearchPage , { loader  }from './pages/Search';
+import NotificationsPage, { loader as notificationsLoader } from './pages/Notifications';
 
 
 import authManagerInstance from './components/AuthManager';
@@ -113,6 +114,20 @@ const router = createBrowserRouter([
         path: 'editProfile/:userId',
         id: 'edit-profile',
         element: <EditProfilePage/>,
+      },
+
+      {
+        path: 'search/:searchTerm',
+        id: 'search-recipe',
+        element: <SearchPage/>,
+        loader: ({ params }) => loader(params),
+
+      },
+
+      {
+        path: 'notifications',
+        element: <NotificationsPage />,
+        loader: notificationsLoader,
       },
 
 

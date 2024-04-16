@@ -1,12 +1,10 @@
-import { Form,NavLink } from 'react-router-dom';
-
+import React from 'react';
+import { Form, NavLink } from 'react-router-dom';
+import SearchBar from './SearchBar'; 
 import authManagerInstance from '../components/AuthManager';
-
 import classes from '../css/MainNavigation.module.css';
 
 function MainNavigation() {
- //const isAuthenticated = getIsAuthenticated(); 
- 
   const isAuthenticated = authManagerInstance.getIsAuthenticated();
 
   return (
@@ -78,7 +76,6 @@ function MainNavigation() {
               </NavLink>
             </li>
           )}
-
           {isAuthenticated && ( 
             <li>
               <NavLink
@@ -92,6 +89,20 @@ function MainNavigation() {
             </li>
           )}
 
+          {isAuthenticated && ( 
+            <li>
+              <NavLink
+                to="/notifications"
+                className={({ isActive }) =>
+                  isActive ? classes.active : undefined
+                }
+              >
+               Check Notifications
+              </NavLink>
+            </li>
+          )}
+
+
           {isAuthenticated && (
             <li>
               <Form action="/logout" method="post">
@@ -99,6 +110,10 @@ function MainNavigation() {
               </Form>
             </li>
           )}
+          
+          <li>
+            <SearchBar />
+          </li>
         </ul>
       </nav>
     </header>
