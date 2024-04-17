@@ -2,13 +2,14 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    margin-left: 100px;
+    margin-left: 150px;
   }
   
   .searchInput {
-    padding: 0.5rem;
+    padding: 0.3rem;
     border: 1px solid var(--color-gray-600);
-    border-radius: 4px;
+    border-radius: 6px;
+    width: 200px;
   }
   
   .searchIcon {

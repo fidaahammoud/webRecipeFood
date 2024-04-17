@@ -27,7 +27,8 @@ import EditRecipeDetailsPage from './pages/EditRecipe';
 import EditProfilePage from './pages/EditProfile';
 import SearchPage , { loader  }from './pages/Search';
 import NotificationsPage, { loader as notificationsLoader } from './pages/Notifications';
-
+import SortedRecipesPage, { loader as loadSortedRecipes } from './pages/SortedRecipes';
+import FollowingsPage, { loader as loadFollowings } from './pages/Followings';
 
 import authManagerInstance from './components/AuthManager';
 const isAuthenticated = authManagerInstance.getIsAuthenticated();
@@ -46,6 +47,12 @@ const router = createBrowserRouter([
         path: 'recipes',
         element: <RecipesPage />,
         loader: recipesLoader,
+      },
+
+      {
+        path: 'recipes/sort/:sortingCriteria',
+        element: <SortedRecipesPage />,
+        loader: loadSortedRecipes,
       },
       
       {
@@ -129,6 +136,14 @@ const router = createBrowserRouter([
         element: <NotificationsPage />,
         loader: notificationsLoader,
       },
+
+
+      {
+        path: 'followings',
+        element: <FollowingsPage />,
+        loader: loadFollowings,
+      },
+
 
 
 

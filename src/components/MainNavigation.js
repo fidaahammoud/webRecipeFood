@@ -92,6 +92,19 @@ function MainNavigation() {
           {isAuthenticated && ( 
             <li>
               <NavLink
+                to="/followings"
+                className={({ isActive }) =>
+                  isActive ? classes.active : undefined
+                }
+              >
+               View Followings
+              </NavLink>
+            </li>
+          )}
+
+          {isAuthenticated && ( 
+            <li>
+              <NavLink
                 to="/notifications"
                 className={({ isActive }) =>
                   isActive ? classes.active : undefined

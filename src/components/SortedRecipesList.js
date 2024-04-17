@@ -1,39 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import classes from '../css/RecipesList.module.css';
-import { faThumbsUp, faSort } from '@fortawesome/free-solid-svg-icons';
+import { faThumbsUp , faSearch} from '@fortawesome/free-solid-svg-icons'; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Modal from './Modal';
-import { Utils } from './Utils';
 
-function RecipesList({ recipes, setSortingCriteria }) {
+import { Utils } from './Utils'; 
+
+function SortedRecipesList({ recipes }) {
   const API_HOST = process.env.REACT_APP_API_URL;
   const { getTimeDifference } = Utils();
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedSort, setSelectedSort] = useState('');
-
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
-
-  const handleSortSelection = (criteria) => {
-    setSortingCriteria(criteria);
-    setSelectedSort(criteria); 
-    console.log(selectedSort);
-    closeModal();
-  };
-
   return (
     <div className={classes.recipes}>
+
       <div className={classes.title}>
         <h1>All Recipes</h1>
-        <FontAwesomeIcon icon={faSort} onClick={openModal} className={classes.sortIcon} />
-        <Modal isOpen={isModalOpen} onClose={closeModal}>
-          <button onClick={() => handleSortSelection('totalLikes')}>Most Liked</button>
-          <button onClick={() => handleSortSelection('avrgRating')}>Top Rated</button>
-          <button onClick={() => handleSortSelection('created_at')}>Latest</button>
-          <button onClick={() => handleSortSelection('preparationTime')}>Preparation Time</button>
-        </Modal>
       </div>
       <div className={classes.list}>
         {recipes.length === 0 ? (
@@ -57,23 +38,24 @@ function RecipesList({ recipes, setSortingCriteria }) {
                 </div>
                 <div className={classes.recipeDetails}>
                   <div className={classes.likesContainer}>
-                    <FontAwesomeIcon icon={faThumbsUp} color={'white'} className={classes.likeIcon} />
-                    <span className={classes.likesText}>{recipe.totalLikes}</span>
+                  <FontAwesomeIcon icon={faThumbsUp}   color={'white'}  className={classes.likeIcon}/>
+                 <span className={classes.likesText}>{recipe.totalLikes}</span>
                   </div>
+
+
                   <div className={classes.ratingContainer}>
                     <i className={`fa fa-star ${classes.ratingIcon}`} />
                     <span className={classes.ratingText}>{recipe.avrgRating}</span>
                   </div>
                 </div>
                 <span className={classes.createdAt}>{getTimeDifference(recipe.created_at)}</span>
-              </Link>
+                </Link>
             </div>
           ))
         )}
       </div>
-      {selectedSort && <Link to={`/recipes/sort/${selectedSort}`}>Sort by {selectedSort}</Link>}
     </div>
   );
 }
 
-export default RecipesList;
+export default SortedRecipesList;
