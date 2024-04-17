@@ -55,17 +55,20 @@ function ChefInfo({ chef }) {
         </div>
         <div>
           {loggedInUserId == chef.id ? (
-            <Link to={`/editProfile/${chef.id}`} > 
-                  <button className={classes.editProfileButton}>
-                    Edit Profile
-                  </button>
-            </Link>
-
+            <>
+              <Link to={`/editProfile/${chef.id}`}>
+                <button className={classes.editProfileButton}>
+                  Edit Profile
+                </button>
+              </Link>
+              <Link to={`/favoriteRecipes`} className={classes.editProfileButton}>
+                View Favorite Recipes
+              </Link>
+            </>
           ) : (
             <button onClick={handleFollowPress} className={classes.followButton}>
-            {followStatus}
-          </button>
-
+              {followStatus}
+            </button>
           )}
         </div>
       </div>

@@ -52,6 +52,23 @@ function MainNavigation() {
               Categories
             </NavLink>
           </li>
+
+
+          <li>
+            <NavLink
+              to="/dietaries"
+              className={({ isActive }) =>
+                isActive ? classes.active : undefined
+              }
+            >
+              Dietaries
+            </NavLink>
+          </li>
+
+
+          
+
+
           {!isAuthenticated && (
             <li>
               <NavLink

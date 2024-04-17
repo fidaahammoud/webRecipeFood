@@ -10,9 +10,13 @@ const httpService = new HttpService();
 
 function RecipesPage() {
   const { recipes } = useLoaderData();
+
+
   const setSortingCriteria = (criteria) => {
     console.log(`Sorting by: ${criteria}`);
   };
+
+  
   return (
     <Suspense fallback={<p style={{ textAlign: 'center' }}>Loading...</p>}>
       <Await resolve={recipes}>

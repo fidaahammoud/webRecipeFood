@@ -14,9 +14,8 @@ import authManagerInstance from '../components/AuthManager';
 
 const httpService = new HttpService();
 
-function MyProfilePage() {
-  const { user, recipes } = useRouteLoaderData("myPresonal-detail");
-
+function FavoriteRecipesPage() {
+  const { user, recipes } = useRouteLoaderData("myfavorite-recipes");
 
   return (
     <>
@@ -25,7 +24,7 @@ function MyProfilePage() {
           {([loadedChefInfo, loadedRecipes]) => (
             <>
               <ChefInfo chef={loadedChefInfo} />
-              {loadedRecipes && <FavoriteRecipesList recipes={loadedRecipes}/>} 
+              {loadedRecipes && <FavoriteRecipesList recipes={loadedRecipes} />} 
             </>
           )}
         </Await>
@@ -34,7 +33,7 @@ function MyProfilePage() {
   );
 }
 
-export default MyProfilePage;
+export default FavoriteRecipesPage;
 
 
 async function loadChefInfo() {
@@ -45,6 +44,9 @@ async function loadChefInfo() {
 
   const API_HOST = process.env.REACT_APP_API_URL;
   const url = `${API_HOST}/api/users/${userId}/${userId}`;
+
+  console.log(url);
+
   const response = await httpService.get(url,token);
 
   console.log("user details : "+response)
@@ -53,13 +55,14 @@ async function loadChefInfo() {
 
 }
 
-async function loadChefRecipes() {
+async function loadFavoriteRecipesRecipes() {
   const userId = authManagerInstance.getUserId();
   const token = authManagerInstance.getAuthToken();;
 
   const API_HOST = process.env.REACT_APP_API_URL;
-  const url = `${API_HOST}/api/users/${userId}/recipes?sort=-created_at`;
+  const url = `${API_HOST}/api/users/${userId}/favorites`;
   const response = await httpService.get(url,token);
+  console.log(response.data);
   return response.data;
 }
 
@@ -67,7 +70,7 @@ export async function loader({ request, params }) {
 
   const [user, recipes] = await Promise.all([
     loadChefInfo(),
-    loadChefRecipes(), 
+    loadFavoriteRecipesRecipes(), 
   ]);
 
   return defer({

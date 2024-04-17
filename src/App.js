@@ -29,6 +29,11 @@ import SearchPage , { loader  }from './pages/Search';
 import NotificationsPage, { loader as notificationsLoader } from './pages/Notifications';
 import SortedRecipesPage, { loader as loadSortedRecipes } from './pages/SortedRecipes';
 import FollowingsPage, { loader as loadFollowings } from './pages/Followings';
+import FavoriteRecipesPage, { loader as loadFavoriteRecipes } from './pages/FavoriteRecipes';
+import DietariesPage, { loader as dietariesLoader } from './pages/Dietaries';
+import DietarydDetailPage, { loader as dietaryDetailsLoader } from './pages/DietarydDetail';
+
+
 
 import authManagerInstance from './components/AuthManager';
 const isAuthenticated = authManagerInstance.getIsAuthenticated();
@@ -74,6 +79,21 @@ const router = createBrowserRouter([
         element: <CategoryDetailPage />,
         loader: categoryDetailsLoader,
       },
+
+      {
+        path: 'dietaries',
+        element: <DietariesPage />,
+        loader: dietariesLoader,
+      },
+
+
+      {
+        path: 'dietaries/:dietaryId',
+        id: 'dietary-detail',
+        element: <DietarydDetailPage />,
+        loader: dietaryDetailsLoader,
+      },
+
       
       {
         path: 'chefs',
@@ -142,6 +162,14 @@ const router = createBrowserRouter([
         path: 'followings',
         element: <FollowingsPage />,
         loader: loadFollowings,
+      },
+
+
+      {
+        path: 'favoriteRecipes',
+        id: 'myfavorite-recipes',
+        element: <FavoriteRecipesPage />,
+        loader: loadFavoriteRecipes,
       },
 
 
