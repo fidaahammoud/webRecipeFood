@@ -50,7 +50,7 @@ const fetchProfileDetails = async () => {
   return (
     <>
       <Form method='post' className={classes.form} onSubmit={handleSubmit}> 
-        <h1>Provide Additional Details</h1>
+        <h1>Edit profile details</h1>
         <p>
           <label htmlFor="username">Username</label>
           <input 
@@ -70,8 +70,7 @@ const fetchProfileDetails = async () => {
           <input id="bio" type="text" name="bio" value={aboutMe} onChange={(e) => setAboutMe(e.target.value)} />
         </p>
         <div className={classes.actions}>
-          <Link to="/auth">Back to Login</Link>
-          <button type="submit">Register</button>
+          <button type="submit">Done</button>
         </div>
       </Form>
     </>

@@ -8,7 +8,7 @@ import {
 } from 'react-router-dom';
 
 import ChefInfo from '../components/ChefInfo';
-import RecipesList from '../components/RecipesList';
+import FavoriteRecipesList from '../components/FavoriteRecipesList';
 
 import HttpService from '../components/HttpService';
 import authManagerInstance from '../components/AuthManager';
@@ -27,7 +27,7 @@ function ChefDetailPage() {
           {([loadedChefInfo, loadedRecipes]) => (
             <>
               <ChefInfo chef={loadedChefInfo} />
-              {loadedRecipes && <RecipesList recipes={loadedRecipes} />} 
+              {loadedRecipes && <FavoriteRecipesList recipes={loadedRecipes} />} 
             </>
           )}
         </Await>

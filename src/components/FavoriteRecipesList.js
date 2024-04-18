@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import classes from '../css/RecipesList.module.css';
-import { faThumbsUp, faSort } from '@fortawesome/free-solid-svg-icons';
+import { faThumbsUp, faSort,faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Modal from './Modal';
 import { Utils } from './Utils';
@@ -10,7 +10,6 @@ function FavoriteRecipesList({ recipes }) {
   const API_HOST = process.env.REACT_APP_API_URL;
   const { getTimeDifference } = Utils();
 
- 
 
   return (
     <div className={classes.recipes}>
@@ -44,6 +43,7 @@ function FavoriteRecipesList({ recipes }) {
                   </div>
                   <div className={classes.ratingContainer}>
                     <i className={`fa fa-star ${classes.ratingIcon}`} />
+                    <FontAwesomeIcon icon={faStar} color={'gold'} className={classes.rateIcon} />
                     <span className={classes.ratingText}>{recipe.avrgRating}</span>
                   </div>
                 </div>

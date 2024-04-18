@@ -13,6 +13,7 @@ function EditProfilePage() {
   const [imageId, setImageId] = useState(null);
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
+  const [toastType, setToastType] = useState('');
 
   const navigate = useNavigate(); 
 
@@ -47,10 +48,17 @@ function EditProfilePage() {
       const response = await httpService.put(url, authData, token,true);
       if (response && response.message === 'success' ) {
         setToastMessage('Personal information updated successfully');
+        setToastType('success');
         setShowToast(true);
         setTimeout(navigateToHome, 2000);
       }
-      console.log(response);
+       else {
+        setToastMessage(response.message);
+        setToastType('error');
+        setShowToast(true);
+      }
+
+ 
       
     } catch (error) {
       console.error('Error completing profile:', error);
@@ -70,7 +78,7 @@ function EditProfilePage() {
       <UploadImageToDB onImageUpload={handleImageUpload} imageId={imageId}   />
       <EditProfileForm onSubmit={handleSubmit} />
       {showToast && (
-      <Toast message={toastMessage}/>
+      <Toast message={toastMessage} type={toastType} />
       )}
     </>
   );

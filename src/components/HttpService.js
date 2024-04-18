@@ -47,12 +47,12 @@ class HttpService extends Component {
         console.log('Response status:', response.status);
         console.log('Response body:', responseBody);
   
-        if (response.status === 401 || response.status === 422) {
-          throw json({ message: responseBody.message });
+        // if (response.status === 401 || response.status === 422) {
+        //   throw json({ message: responseBody.message });
             
-        } else {
-          throw json({ message: 'Something went wrong!' }, { status: 500 });
-        }
+        // } else {
+        //   throw json({ message: 'Something went wrong!' }, { status: 500 });
+        // }
       }
       return responseBody;
     } catch (error) {
@@ -74,19 +74,20 @@ class HttpService extends Component {
       });
       const responseBody = await response.json();
 
-      if (!response.ok) {
-        console.log('Response status:', response.status);
-        console.log('Response body:', responseBody);
-  
-        if (response.status === 400) {
-          console.log("status 400");
-          const errorMessage = Array.isArray(responseBody.message) ? responseBody.message.join(', ') : responseBody.message;
-          console.log(errorMessage);
-          throw json({ message: errorMessage});
-        }  else {
-          throw json({ message: 'Something went wrong!' }, { status: 500 });
-        }
-      }
+      // if (!response.ok) {
+      //   console.log('Response status:', response.status);
+      //   console.log('Response body:', responseBody);
+      //   console.log(responseBody.message);
+      //   console.log("toto");
+      //   if (response.status === 422) {
+      //    // throw json({ message: responseBody.message });
+            
+      //   } else {
+      //     throw json({ message: 'Something went wrong!' }, { status: 500 });
+      //   }
+
+      // }
+      
       return responseBody;
     } catch (error) {
       console.error('Error:', error);

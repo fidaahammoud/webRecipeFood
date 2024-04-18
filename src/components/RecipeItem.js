@@ -1,14 +1,14 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleDown, faAngleUp, faEdit,faStar, faTrash, faThumbsUp,faPaperPlane, faHeart,faCheck  } from '@fortawesome/free-solid-svg-icons'; 
+import { faAngleDown, faAngleUp, faEdit, faStar, faTrash, faThumbsUp, faPaperPlane, faHeart } from '@fortawesome/free-solid-svg-icons';
 import classes from '../css/RecipeItem.module.css';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import HttpService from '../components/HttpService';
 import authManagerInstance from '../components/AuthManager';
-import verificationIcon from "../images/Verification-Logo.png";  
-import { Utils } from './Utils'; 
-
+import verificationIcon from "../images/Verification-Logo.png";
+import { Utils } from './Utils';
+import Toast from '../components/Toast'; 
 
 function RecipeItem({ recipe }) {
   const [showIngredients, setShowIngredients] = useState(false);
@@ -18,14 +18,17 @@ function RecipeItem({ recipe }) {
   const [averageRating, setAverageRating] = useState(recipe.avrgRating);
   const [userRate, setUserRate] = useState(0);
   const [isRated, setIsRated] = useState(recipe.isRated);
-  const [rating, setRating] = useState(recipe.rating);
-
   const [comments, setComments] = useState(recipe.comments);
   const [comment, setComment] = useState('');
   const [error, setError] = useState(null);
   const [isFavorite, setIsFavorite] = useState(recipe.isFavorite);
 
-  
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
+  const [toastType, setToastType] = useState('');
+
+
+
   const { getTimeDifference } = Utils();
 
   const loggedInUser = authManagerInstance.getUserId();
@@ -64,7 +67,7 @@ function RecipeItem({ recipe }) {
 
   useEffect(() => {
     displayEditAndDelete();
-  }, []);
+  }, [recipe]);
 
   const displayEditAndDelete = () => {
     if (loggedInUser === recipe.user.id) {
@@ -92,11 +95,19 @@ function RecipeItem({ recipe }) {
       const httpService = new HttpService();
       const response = await httpService.delete(url, token);
       console.log(response);
-      navigate('/');
+      if (response && response.message === 'success' ) {
+        setToastMessage('Recipe deleted successfully');
+        setToastType('success');
+        setShowToast(true);
+        setTimeout(navigateToHome, 1500);
+      }
     } catch (error) {
       console.log(error.message);
     }
   };
+  function navigateToHome() {
+    navigate('/');
+}
 
   const handleLikePress = async () => {
     try {
@@ -113,11 +124,10 @@ function RecipeItem({ recipe }) {
     try {
       const httpService = new HttpService();
       const response = await httpService.put(`${API_HOST}/api/${userId}/${recipe.id}/${userRate}/updateStatusRate`, null, token);
-      console.log("Response average rating:", response.avgRating);  
-      const formattedRating = parseFloat(response.avgRating).toFixed(1);  
-      console.log("Formatted rating:", formattedRating);  
-      setAverageRating(formattedRating); 
-
+      console.log("Response average rating:", response.avgRating);
+      const formattedRating = parseFloat(response.avgRating).toFixed(1);
+      console.log("Formatted rating:", formattedRating);
+      setAverageRating(formattedRating);
     } catch (error) {
       console.log(error.message);
     }
@@ -125,12 +135,11 @@ function RecipeItem({ recipe }) {
 
   useEffect(() => {
     if (isRated) {
-      setUserRate(recipe.rating);  
+      setUserRate(recipe.rating);
     }
   }, [isRated]);
 
-
-  const handleFavoritePress = async (recipeId) => {
+  const handleFavoritePress = async () => {
     try {
       const httpService = new HttpService();
       const response = await httpService.put(`${API_HOST}/api/${userId}/${recipe.id}/updateStatusFavorite`, null, token);
@@ -140,10 +149,20 @@ function RecipeItem({ recipe }) {
     }
   };
 
-  const handleStarClick = (rating) => {
-    setUserRate(rating);
+  const handleStarClick = async (rating) => {
+    try {
+      const httpService = new HttpService();
+      const response = await httpService.put(`${API_HOST}/api/${userId}/${recipe.id}/${rating}/updateStatusRate`, null, token);
+      console.log("Response average rating:", response.avgRating);
+      const formattedRating = parseFloat(response.avgRating).toFixed(1);
+      console.log("Formatted rating:", formattedRating);
+      setAverageRating(formattedRating);
+      setUserRate(rating);  // Update userRate with the selected rating
+    } catch (error) {
+      console.log(error.message);
+    }
   };
-  
+
   const getStarIconName = (rating) => {
     if (userRate >= rating) {
       return "gold";
@@ -151,7 +170,6 @@ function RecipeItem({ recipe }) {
       return "grey";
     }
   };
-  
 
   return (
     <article className={classes.recipeContainer}>
@@ -207,7 +225,7 @@ function RecipeItem({ recipe }) {
         </div>
 
          {/* Add comment form */}
-         <form onSubmit={handleCommentSubmit} className={classes.commentForm} >
+         <form onSubmit={handleCommentSubmit} className={classes.commentForm}>
             <input
               type="text"
               placeholder="Add a comment..."
@@ -218,11 +236,9 @@ function RecipeItem({ recipe }) {
             <button type="submit" className={classes.commentButton}>
               {/* send */}
               <FontAwesomeIcon icon={faPaperPlane} onClick={handleCommentChange} color='grey' />
-
             </button>
           </form>
           {error && <p className={classes.error}>{error}</p>}
-
       </div>
 
       {/* Recipe details */}
@@ -237,19 +253,16 @@ function RecipeItem({ recipe }) {
             <FontAwesomeIcon icon={faThumbsUp} onClick={handleLikePress} color={isLiked ? 'blue' : 'white'} className={classes.likeIcon}/>
             <span className={classes.likesCount}>{totalLikes}</span>
           </div>
-
           <div>
             <FontAwesomeIcon icon={faStar} onClick={handleRatePress} color={'gold'} className={classes.rateIcon} />
             <span className={classes.averageRating}>{averageRating}</span>
           </div>
-
           <div>
-            <FontAwesomeIcon icon={faHeart } onClick={handleFavoritePress} color={isFavorite ? 'red' : 'white'} className={classes.favoriteIcon} />
+            <FontAwesomeIcon icon={faHeart} onClick={handleFavoritePress} color={isFavorite ? 'red' : 'white'} className={classes.favoriteIcon} />
             <span className={classes.favoriteStatus}>
               {isFavorite ? "Remove from favorite" : "Add to favorite"}
             </span>
           </div>
-
         </div>
 
         <p>Description : {recipe.description}</p>
@@ -281,28 +294,24 @@ function RecipeItem({ recipe }) {
             ))}
           </ol>
         )}
-
-          <div className={classes.title}>Add your Rate : {userRate}</div>
-
-          <div className={classes.rateIconUserIcon}>
-            {[1, 2, 3, 4, 5].map((rating) => (
-              <FontAwesomeIcon
-                key={rating}
-                icon={faStar}
-                onClick={() => handleStarClick(rating)}
-                color={getStarIconName(rating)}
-                className={classes.rateIcon}
-              />
-            ))}
-           <button onClick={handleRatePress} className={classes.submitButton} disabled={userRate <= 0}>
-              Submit Rating
-            </button>
-    
-          </div>
-
-
-
+        <div className={classes.title}>Add your Rate : {userRate}</div>
+        <div className={classes.rateIconUserIcon}>
+          {[1, 2, 3, 4, 5].map((rating) => (
+            <FontAwesomeIcon
+              key={rating}
+              icon={faStar}
+              onClick={() => handleStarClick(rating)}
+              color={getStarIconName(rating)}
+              className={classes.rateIcon}
+            />
+          ))}
+        </div>
       </div>
+
+      {showToast && (
+      <Toast message={toastMessage} type={toastType} />
+      )}
+
     </article>
   );
 }

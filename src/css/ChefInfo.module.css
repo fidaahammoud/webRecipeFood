@@ -8,7 +8,7 @@
 }
 
 .imageContainer {
-  display: flex; /* Changed to flex */
+  display: flex;
   align-items: center;
   margin-right: 20px;
 }
@@ -55,4 +55,36 @@
 .totalFollowers {
   font-size: 16px;
   color: #b6b0b0;
+}
+
+.buttons {
+  margin-top: 10px;
+}
+
+.button {
+  margin-right: 10px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.editProfileButton {
+  background-color: #434039;
+  color: white;
+}
+
+.favoriteRecipesButton {
+  color: white;
+  text-decoration: none;
+}
+
+.followButton {
+  background-color: #434039;
+  color: white;
+}
+
+.button:hover {
+  opacity: 0.9;
 }

@@ -16,6 +16,7 @@ function EditRecipeDetailsPage() {
 
     const [showToast, setShowToast] = useState(false);
     const [toastMessage, setToastMessage] = useState('');
+    const [toastType, setToastType] = useState('');
 
 
     const navigate = useNavigate();
@@ -58,10 +59,18 @@ function EditRecipeDetailsPage() {
             console.log(response);
             if (response && response.message === 'success' ) {
                 setToastMessage('Recipe details updated successfully');
+                setToastType('success');
                 setShowToast(true);
                 setTimeout(navigateToHome, 2000);
                 
             }
+            else{
+                setToastMessage(response.message);
+                setToastType('error');
+                setShowToast(true);
+              }
+
+
     
         } catch (error) {
             console.error('Error updating a recipe:', error);
@@ -91,8 +100,8 @@ function EditRecipeDetailsPage() {
             <UploadImageToDB onImageUpload={handleImageUpload} />
 
             {showToast && (
-            <Toast message={toastMessage}/>
-            )}
+      <Toast message={toastMessage} type={toastType} />
+    )}
         </>
     );
 }

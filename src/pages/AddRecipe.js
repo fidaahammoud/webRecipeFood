@@ -20,6 +20,7 @@ function AddRecipeDeatilsPage() {
    
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
+  const [toastType, setToastType] = useState('');
 
   const navigate = useNavigate(); 
   
@@ -52,15 +53,20 @@ function AddRecipeDeatilsPage() {
       const url = `${API_HOST}/api/recipes`;
 
       const response = await httpService.post(url, recipeData, token);
-      const newRecipeId = response.id;
-      console.log("NEW RECIPE ID : "+newRecipeId);
-      console.log(response);
 
+      console.log("response.message");
       console.log(response.message);
+
       if (response && response.message === 'success' ) {
         setToastMessage('Recipe added successfully');
+        setToastType('success');
         setShowToast(true);
         setTimeout(navigateToHome, 2000);
+      }
+      else{
+        setToastMessage(response.message);
+        setToastType('error');
+        setShowToast(true);
       }
 
     } catch (error) {
@@ -89,8 +95,8 @@ function AddRecipeDeatilsPage() {
       <UploadImageToDB onImageUpload={handleImageUpload} />
 
       {showToast && (
-      <Toast message={toastMessage}/>
-      )}
+      <Toast message={toastMessage} type={toastType} />
+    )}
 
 
     </>

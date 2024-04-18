@@ -70,11 +70,11 @@ function AddRecipeFormPage({ onSubmit, ingredients, steps }) {
         </div>
         <div>
           <label htmlFor="preparationTime">Preparation Time</label>
-          <input id="preparationTime" type='number' name="preparationTime"  />
+          <input id="preparationTime" type='number' name="preparationTime"  required />
         </div>
         <div>
           <label htmlFor="comment">Comment</label>
-          <input id="comment" type='text' name="comment"  />
+          <input id="comment" type='text' name="comment"   />
         </div>
 
         <div>
@@ -103,6 +103,7 @@ function AddRecipeFormPage({ onSubmit, ingredients, steps }) {
               value={ingredient.name}
               onChange={e => handleIngredientChange(index, e)}
               placeholder="Ingredient"
+              required 
             />
             <input
               type="text"
@@ -110,6 +111,7 @@ function AddRecipeFormPage({ onSubmit, ingredients, steps }) {
               value={ingredient.unit}
               onChange={e => handleIngredientChange(index, e)}
               placeholder="Unit of Measurement"
+              required 
             />
             {localIngredients.length > 1 && (
               <button type="button" onClick={() => handleDeleteIngredient(index)}>Delete</button>
@@ -128,6 +130,7 @@ function AddRecipeFormPage({ onSubmit, ingredients, steps }) {
               value={step}
               onChange={e => handleStepChange(index, e)}
               placeholder={`Step ${index + 1}`}
+              required 
             />
             {localSteps.length > 1 && (
               <button type="button" onClick={() => handleDeleteStep(index)}>Delete</button>

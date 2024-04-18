@@ -51,22 +51,22 @@ function ChefInfo({ chef }) {
         <p className={classes.username}>{chef.username}</p>
         <p className={classes.bio}>{chef.bio}</p>
         <div className={classes.followers}>
-          <p className={classes.totalFollowers}>{totalFollowers}</p>
+          <p className={classes.totalFollowers}>{totalFollowers} Followers</p>
         </div>
-        <div>
+        <div className={classes.buttons}>
           {loggedInUserId == chef.id ? (
             <>
               <Link to={`/editProfile/${chef.id}`}>
-                <button className={classes.editProfileButton}>
+                <button className={`${classes.editProfileButton} ${classes.button}`}>
                   Edit Profile
                 </button>
               </Link>
-              <Link to={`/favoriteRecipes`} className={classes.editProfileButton}>
+              <Link to={`/favoriteRecipes`} className={`  ${classes.favoriteRecipesButton}`}>
                 View Favorite Recipes
               </Link>
             </>
           ) : (
-            <button onClick={handleFollowPress} className={classes.followButton}>
+            <button onClick={handleFollowPress} className={`${classes.followButton} ${classes.button}`}>
               {followStatus}
             </button>
           )}

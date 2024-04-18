@@ -134,6 +134,7 @@ function EditRecipeFormPage({ onSubmit }) {
                         name="preparationTime" 
                         value={preparationTime}
                         onChange={(e) => setPreparationTime(e.target.value)} 
+                        required
                     />
                 </div>
                 <div>
@@ -181,6 +182,7 @@ function EditRecipeFormPage({ onSubmit }) {
                             value={ingredient.name}
                             onChange={e => handleIngredientChange(index, e)}
                             placeholder="Ingredient"
+                            required
                         />
                         <input
                             type="text"
@@ -188,6 +190,7 @@ function EditRecipeFormPage({ onSubmit }) {
                             value={ingredient.unit}
                             onChange={e => handleIngredientChange(index, e)}
                             placeholder="Unit of Measurement"
+                            required
                         />
                         {localIngredients.length > 1 && (
                             <button type="button" onClick={() => handleDeleteIngredient(index)}>Delete</button>
@@ -205,6 +208,7 @@ function EditRecipeFormPage({ onSubmit }) {
                             value={step}
                             onChange={e => handleStepChange(index, e)}
                             placeholder={`Step ${index + 1}`}
+                            required
                         />
                         {localSteps.length > 1 && (
                             <button type="button" onClick={() => handleDeleteStep(index)}>Delete</button>
