@@ -52,11 +52,13 @@
   align-items: center;
   margin-bottom: 10px; 
 }
-
 .title {
-  font-size: 1.5rem;
-  text-transform: capitalize; 
+  font-size: 1.0rem;
+  text-transform: capitalize;
+  font-weight: bold;
+  color: rgb(188, 159, 159);
 }
+
 
 .icon {
   margin-right: 10px; 

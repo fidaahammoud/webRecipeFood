@@ -38,13 +38,14 @@ export async function action({ request }) {
     const response = await httpService.authentication(url, authData, null);
    
     const authToken = response.access_token;
-    const userId = response.data.id;
+    const userId = response.user.id;
+    const username = response.user.username;
 
     console.log(authToken);
     console.log(userId);
 
   
-    authManagerInstance.login(authToken,userId);
+    authManagerInstance.login(authToken,userId,username);
     const isAuthenticated = authManagerInstance.getIsAuthenticated();
     console.log(isAuthenticated);
 

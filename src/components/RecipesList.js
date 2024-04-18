@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import classes from '../css/RecipesList.module.css';
-import { faThumbsUp, faSort,faStar } from '@fortawesome/free-solid-svg-icons';
+import { faThumbsUp, faSort, faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Modal from './Modal';
 import { Utils } from './Utils';
@@ -9,6 +9,7 @@ import { Utils } from './Utils';
 function RecipesList({ recipes, setSortingCriteria }) {
   const API_HOST = process.env.REACT_APP_API_URL;
   const { getTimeDifference } = Utils();
+  const location = useLocation();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedSort, setSelectedSort] = useState('');
@@ -18,21 +19,28 @@ function RecipesList({ recipes, setSortingCriteria }) {
 
   const handleSortSelection = (criteria) => {
     setSortingCriteria(criteria);
-    setSelectedSort(criteria); 
-    console.log(selectedSort);
+    setSelectedSort(criteria);
     closeModal();
   };
+
+  useEffect(() => {
+    if (selectedSort) {
+      window.location.href = `/recipes/sort/${selectedSort}`;
+    }
+  }, [selectedSort]);
 
   return (
     <div className={classes.recipes}>
       <div className={classes.title}>
         <h1>All Recipes</h1>
-        <FontAwesomeIcon icon={faSort} onClick={openModal} className={classes.sortIcon} />
+        <div className={classes.sortIconContainer}>
+          <FontAwesomeIcon icon={faSort} onClick={openModal} className={classes.sortIcon} />
+        </div>
         <Modal isOpen={isModalOpen} onClose={closeModal}>
-          <button onClick={() => handleSortSelection('totalLikes')}>Most Liked</button>
-          <button onClick={() => handleSortSelection('avrgRating')}>Top Rated</button>
-          <button onClick={() => handleSortSelection('created_at')}>Latest</button>
-          <button onClick={() => handleSortSelection('preparationTime')}>Preparation Time</button>
+          <button onClick={() => handleSortSelection('totalLikes')} className={classes.sortingButtons} >Most Liked</button>
+          <button onClick={() => handleSortSelection('avrgRating')}className={classes.sortingButtons}>Top Rated</button>
+          <button onClick={() => handleSortSelection('created_at')}className={classes.sortingButtons}>Latest</button>
+          <button onClick={() => handleSortSelection('preparationTime')}className={classes.sortingButtons}>Preparation Time</button>
         </Modal>
       </div>
       <div className={classes.list}>
@@ -72,7 +80,6 @@ function RecipesList({ recipes, setSortingCriteria }) {
           ))
         )}
       </div>
-      {selectedSort && <Link to={`/recipes/sort/${selectedSort}`}>Sort by {selectedSort}</Link>}
     </div>
   );
 }

@@ -7,6 +7,7 @@ function Modal({ isOpen, onClose, children }) {
   return (
     <div className={classes.overlay}>
       <div className={classes.modal}>
+        <p style={{ color: '#434039', fontWeight: 'bold' }}>Sort By: </p>
         <button className={classes.closeButton} onClick={onClose}>
           &times;
         </button>

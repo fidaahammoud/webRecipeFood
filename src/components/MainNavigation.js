@@ -6,6 +6,7 @@ import classes from '../css/MainNavigation.module.css';
 
 function MainNavigation() {
   const isAuthenticated = authManagerInstance.getIsAuthenticated();
+  const haveUsername = authManagerInstance.getUsername();
 
   return (
     <header className={classes.header}>
@@ -81,7 +82,7 @@ function MainNavigation() {
               </NavLink>
             </li>
           )}
-          {isAuthenticated && ( 
+          {isAuthenticated && haveUsername && ( 
             <li>
               <NavLink
                 to="/profile"
@@ -93,7 +94,7 @@ function MainNavigation() {
               </NavLink>
             </li>
           )}
-          {isAuthenticated && ( 
+          {isAuthenticated && haveUsername && ( 
             <li>
               <NavLink
                 to="/addRecipe"
@@ -106,7 +107,7 @@ function MainNavigation() {
             </li>
           )}
 
-          {isAuthenticated && ( 
+          {isAuthenticated && haveUsername && ( 
             <li>
               <NavLink
                 to="/followings"
@@ -119,7 +120,7 @@ function MainNavigation() {
             </li>
           )}
 
-          {isAuthenticated && ( 
+          {isAuthenticated && haveUsername && ( 
             <li>
               <NavLink
                 to="/notifications"
@@ -133,10 +134,10 @@ function MainNavigation() {
           )}
 
 
-          {isAuthenticated && (
+          {isAuthenticated && haveUsername && (
             <li>
               <Form action="/logout" method="post">
-                <button>Logout</button>
+                <button className={classes.logoutButton}>Logout</button>
               </Form>
             </li>
           )}

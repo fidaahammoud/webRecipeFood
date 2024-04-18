@@ -265,11 +265,13 @@ function RecipeItem({ recipe }) {
           </div>
         </div>
 
-        <p>Description : {recipe.description}</p>
-        <p>Category: {recipe.category.name}</p>
-        <p>Dietary Preference: {recipe.dietary.name}</p>
-        <p>Preparation Time : {recipe.preparationTime}</p>
-        <p>Chefs comment: {recipe.comment}</p>
+        <p><span className={classes.title}>Description :</span> {recipe.description}</p>
+        <p><span className={classes.title}>Category :</span> {recipe.category.name}</p>
+        <p><span className={classes.title}>Dietary Preference :</span> {recipe.dietary.name}</p>
+        <p><span className={classes.title}>Preparation Time :</span> {recipe.preparationTime}</p>
+        <p><span className={classes.title}>Chefs comment :</span> {recipe.comment}</p>
+
+
         {/* Ingredients */}
         <div className={classes.sectionHeader}>
           <h2 className={classes.title}>Ingredients</h2>

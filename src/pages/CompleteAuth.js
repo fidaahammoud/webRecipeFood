@@ -34,11 +34,16 @@ function CompleteAuthPage() {
 
       const response = await httpService.put(url, authData, token);
 
+
       if (response && response.message === 'success') {
+        const userId = response.user.id;
+
+        authManagerInstance.login(token,userId,authData.username);
+
         setToastMessage('Profile completed successfully');
         setToastType('success');
         setShowToast(true);
-        setTimeout(navigateToHome, 2000);
+        setTimeout(navigateToHome, 1500);
       } else {
         setToastMessage(response.message);
         setToastType('error');

@@ -1,34 +1,40 @@
-.dietaries {
-    width: 100%;
-    padding: 20px;
-  }
-  
-  .dietaryContainer {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-  }
-  
-  .dietaryName {
-    flex: 0 0 calc(33.3333% - 10px);
-    margin-bottom: 10px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-    text-align: center;
-  }
-  
-  @media (max-width: 768px) {
-    .dietaryName {
-      flex: 0 0 calc(50% - 10px); 
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .dietaryName {
-      flex: 0 0 100%; 
-    }
-  }
+/* DietariesList.module.css */
 
-  
-  
+.dietaries {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.dietaryContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.dietary {
+  flex: 0 0 calc(33.33% - 20px); 
+  margin-bottom: 20px;
+  text-decoration: none;
+  color: inherit;
+  box-sizing: border-box;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.dietary:hover {
+  background-color: #f5f5f5;
+}
+
+.dietaryName {
+  display: block;
+  text-align: center;
+}

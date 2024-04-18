@@ -134,8 +134,20 @@
   text-align: center;
   text-transform: capitalize;
   margin-left: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center
+}
+
+
+
+.sortIconContainer {
+  margin-left: 15px; 
+  align-items: center;
+  text-align: center;
 
 }
+
 
 .creatorLink {
   text-decoration: none;
@@ -156,4 +168,14 @@
   width: 100%;
   text-align: center;
   text-transform: capitalize;
+}
+.sortingButtons {
+  margin-right: 10px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  background-color: #434039;
+  color: white;
 }

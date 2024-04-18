@@ -20,3 +20,7 @@ function DietriesList({ dietaries }) {
 }
 
 export default DietriesList;
+
+
+
+
