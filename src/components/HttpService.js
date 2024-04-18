@@ -46,13 +46,6 @@ class HttpService extends Component {
       if (!response.ok) {
         console.log('Response status:', response.status);
         console.log('Response body:', responseBody);
-  
-        // if (response.status === 401 || response.status === 422) {
-        //   throw json({ message: responseBody.message });
-            
-        // } else {
-        //   throw json({ message: 'Something went wrong!' }, { status: 500 });
-        // }
       }
       return responseBody;
     } catch (error) {
@@ -60,6 +53,40 @@ class HttpService extends Component {
       throw error;
     }
   }
+
+  async authentication(url, data,token) {
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(data),
+      });
+      const responseBody = await response.json();
+
+      if (!response.ok) {
+        console.log('Response status:', response.status);
+        console.log('Response body:', responseBody);
+  
+        if (response.status === 401 || response.status === 422) {
+          console.log(responseBody.message);
+          throw json({ message: responseBody.message });
+            
+        } else {
+          throw json({ message: 'Something went wrong!' }, { status: 500 });
+        }
+      }
+      return responseBody;
+    } catch (error) {
+      console.error('Error:', error);
+      throw error;
+    }
+  }
+
+
 
   async put(url, data, token) {
     try {

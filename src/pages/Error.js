@@ -27,6 +27,9 @@ function ErrorPage() {
   if (error.status === 400) {
     message = error.data.message;
   }
+  if (error.status === 422) {
+    message = error.data.message;
+  }
 
 
   if (error.status === 404) {

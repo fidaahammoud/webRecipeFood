@@ -25,7 +25,7 @@ export async function action({ request }) {
     }
 
     const data = await request.formData();
-    console.log(data);
+
     const authData = {
       email: data.get('email'),
       password: data.get('password'),
@@ -35,7 +35,7 @@ export async function action({ request }) {
     const url = API_HOST +"/api/" + mode;
     console.log("URL : "+ url);
 
-    const response = await httpService.post(url, authData, null);
+    const response = await httpService.authentication(url, authData, null);
    
     const authToken = response.access_token;
     const userId = response.data.id;
@@ -43,8 +43,7 @@ export async function action({ request }) {
     console.log(authToken);
     console.log(userId);
 
-   // auth.login(authToken,userId);
-    //login(authToken,userId);
+  
     authManagerInstance.login(authToken,userId);
     const isAuthenticated = authManagerInstance.getIsAuthenticated();
     console.log(isAuthenticated);
