@@ -39,7 +39,10 @@ async function loadRecipe(id) {
   const url =   `${API_HOST}/api/${userId}/recipes/${id}`;
   console.log(url);
   const response = await httpService.get(url,token);
-  if(response.isActive === 1){
+  console.log(response.creator_id);
+  console.log(userId);
+
+  if(response.isActive === 1  || response.creator_id === userId){
     return response;
   }
   else{

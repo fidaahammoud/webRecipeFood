@@ -75,8 +75,8 @@ function EditProfilePage() {
 
   return (
     <>
-      <UploadImageToDB onImageUpload={handleImageUpload} imageId={imageId}   />
       <EditProfileForm onSubmit={handleSubmit} />
+      <UploadImageToDB onImageUpload={handleImageUpload} imageId={imageId}   />
       {showToast && (
       <Toast message={toastMessage} type={toastType} />
       )}

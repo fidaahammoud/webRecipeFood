@@ -33,6 +33,7 @@ function CompleteAuthPage() {
       const url = `${API_HOST}/api/completeProfile/${userId}`;
 
       const response = await httpService.put(url, authData, token);
+      console.log("image id : "+response.image_id);
 
 
       if (response && response.message === 'success') {
@@ -64,9 +65,9 @@ function CompleteAuthPage() {
 
   return (
     <>
-      <UploadImageToDB onImageUpload={handleImageUpload} />
+      
       <AdditionalDetailsForm onSubmit={handleSubmit} />
-
+      <UploadImageToDB onImageUpload={handleImageUpload} />
       {showToast && (
         <Toast message={toastMessage} type={toastType} />
       )}

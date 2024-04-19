@@ -3,18 +3,18 @@ class AuthManager {
   constructor() {
     const token = localStorage.getItem('token');
     const userId = localStorage.getItem('userId');
-    const username = localStorage.getItem('username'); // Get username from localStorage
+    const username = localStorage.getItem('username'); 
 
     if (token && userId) {
       this.isAuthenticated = true;
       this.authToken = token;
       this.userId = userId;
-      this.username = username; // Set username from localStorage
+      this.username = username; 
     } else {
       this.isAuthenticated = false;
       this.authToken = null;
       this.userId = null;
-      this.username = null; // Initialize username as null
+      this.username = null; 
     }
   }
 
@@ -22,22 +22,31 @@ class AuthManager {
     this.isAuthenticated = true;
     this.authToken = token;
     this.userId = id;
-    this.username = username; // Set username
+    this.username = username; 
 
     localStorage.setItem('token', token);
     localStorage.setItem('userId', id);
-    localStorage.setItem('username', username); // Save username to localStorage
+    localStorage.setItem('username', username); 
+  };
+  
+  register = (token, id) => {
+    this.isAuthenticated = true;
+    this.authToken = token;
+    this.userId = id;
+
+    localStorage.setItem('token', token);
+    localStorage.setItem('userId', id);
   };
 
   logout = () => {
     this.isAuthenticated = false;
     this.authToken = null;
     this.userId = null;
-    this.username = null; // Reset username
+    this.username = null; 
 
     localStorage.removeItem('token');
     localStorage.removeItem('userId');
-    localStorage.removeItem('username'); // Remove username from localStorage
+    localStorage.removeItem('username'); 
   };
 
   getIsAuthenticated = () => {
@@ -53,20 +62,20 @@ class AuthManager {
   };
 
   getUsername = () => {
-    return this.username; // Get username
+    return this.username; 
   };
 
   refresh = () => {
     console.log("AuthManager: refresh")
     const token = localStorage.getItem('token');
     const userId = localStorage.getItem('userId');
-    const username = localStorage.getItem('username'); // Refresh username from localStorage
+    const username = localStorage.getItem('username'); 
 
     if (token && userId) {
       this.isAuthenticated = true;
       this.authToken = token;
       this.userId = userId;
-      this.username = username; // Set refreshed username
+      this.username = username;
     }
   }
 

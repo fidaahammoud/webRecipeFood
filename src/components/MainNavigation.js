@@ -66,11 +66,7 @@ function MainNavigation() {
             </NavLink>
           </li>
 
-
-          
-
-
-          {!isAuthenticated && (
+          {(!isAuthenticated || (isAuthenticated && !haveUsername)) && (
             <li>
               <NavLink
                 to="/auth"

@@ -2,7 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import classes from '../css/CategoryItem.module.css';
 import { Utils } from './Utils';
-
+import { faThumbsUp, faStar } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 function CategoryItem({ category }) {
   const API_HOST = process.env.REACT_APP_API_URL;
   const { getTimeDifference } = Utils();
@@ -29,15 +30,16 @@ function CategoryItem({ category }) {
               </div>
               <div className={classes.recipeDetails}>
                 <div className={classes.likesContainer}>
-                  <i className={`fa fa-thumbs-o-up ${classes.likesIcon}`} />
+                <FontAwesomeIcon icon={faThumbsUp} color={'white'} className={classes.likeIcon} />
                   <span className={classes.likesText}>{recipe.totalLikes}</span>
                 </div>
                 <div className={classes.ratingContainer}>
-                  <i className={`fa fa-star ${classes.ratingIcon}`} />
+                <FontAwesomeIcon icon={faStar} color={'gold'} className={classes.rateIcon} />
                   <span className={classes.ratingText}>{recipe.avrgRating}</span>
                 </div>
               </div>
-              <span className={classes.createdAt}>{getTimeDifference(recipe.created_at)}</span>            </Link>
+              <span className={classes.createdAt}>{getTimeDifference(recipe.created_at)}</span>
+              </Link>
           ))
         )}
       </div>

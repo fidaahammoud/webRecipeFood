@@ -39,21 +39,15 @@ export async function action({ request }) {
    
     const authToken = response.access_token;
     const userId = response.user.id;
-    const username = response.user.username;
-
-    console.log(authToken);
-    console.log(userId);
-
-  
-    authManagerInstance.login(authToken,userId,username);
-    const isAuthenticated = authManagerInstance.getIsAuthenticated();
-    console.log(isAuthenticated);
-
+    const username = response.user.username || null;
 
     if (mode === "register") {
+      authManagerInstance.register(authToken,userId);
       return redirect('/auth/additional-details');
     } 
     else if (mode === "login") {
+      authManagerInstance.login(authToken,userId,username);
+
       return redirect('/');
     }
   } catch (error) {

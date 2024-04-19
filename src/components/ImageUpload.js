@@ -1,6 +1,6 @@
-import React, { Fragment, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import authManagerInstance from '../components/AuthManager';
-import classes from '../css/RecipeItem.module.css';
+import classes from '../css/UploadImage.module.css';
 
 const UploadImageToDB = ({ onImageUpload }) => {
   const [image, setImage] = useState(null);
@@ -49,12 +49,16 @@ const UploadImageToDB = ({ onImageUpload }) => {
   };
 
   return (
-    <div className="upload-container">
-      <input type="file" name="image" ref={imageRef} onChange={fileSelectHandler} />
-      <br />
-      <button onClick={handleSubmit}>Submit image</button>
-      <br />
-      {imagePreview && <img src={imagePreview} width={500} alt="Preview" />}
+    <div className={classes.uploadContainer}>
+      <div className={classes.inputContainer}>
+        <input type="file" name="image" ref={imageRef} onChange={fileSelectHandler} />
+        <button onClick={handleSubmit}>Submit image</button>
+      </div>
+      {imagePreview && (
+        <div className={classes.imagePreviewContainer}>
+          <img src={imagePreview} className={classes.imagePreview} alt="Preview" />
+        </div>
+      )}
     </div>
   );
 }
