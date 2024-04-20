@@ -53,3 +53,9 @@
 .unreadNotification {
   background-color: #b4bbbf; 
 }
+.disabledMessage {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 18px;
+  color: #777;
+}

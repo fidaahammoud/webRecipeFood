@@ -88,3 +88,8 @@
 .button:hover {
   opacity: 0.9;
 }
+
+.settingsIcon {
+  margin-left: 10px; 
+  cursor: pointer; 
+}

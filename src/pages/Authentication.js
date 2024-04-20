@@ -41,12 +41,20 @@ export async function action({ request }) {
     const userId = response.user.id;
     const username = response.user.username || null;
 
+    const isNotificationActive = response.user.isNotificationActive === 1; 
+    console.log("toto: "+isNotificationActive);
+
     if (mode === "register") {
       authManagerInstance.register(authToken,userId);
+      authManagerInstance.setNotificationStatus(true);
       return redirect('/auth/additional-details');
     } 
     else if (mode === "login") {
       authManagerInstance.login(authToken,userId,username);
+      authManagerInstance.setNotificationStatus(isNotificationActive);
+
+      console.log("isNotificationActive");
+      console.log("titi: "+authManagerInstance.getNotificationStatus());
 
       return redirect('/');
     }

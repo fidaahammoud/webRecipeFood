@@ -4,17 +4,21 @@ class AuthManager {
     const token = localStorage.getItem('token');
     const userId = localStorage.getItem('userId');
     const username = localStorage.getItem('username'); 
+    const notificationStatus = localStorage.getItem('notificationStatus'); 
 
     if (token && userId) {
       this.isAuthenticated = true;
       this.authToken = token;
       this.userId = userId;
       this.username = username; 
+      this.notificationStatus = notificationStatus === 'true';
+
     } else {
       this.isAuthenticated = false;
       this.authToken = null;
       this.userId = null;
       this.username = null; 
+      this.notificationStatus = true;
     }
   }
 
@@ -43,10 +47,13 @@ class AuthManager {
     this.authToken = null;
     this.userId = null;
     this.username = null; 
+    this.notificationStatus = null; 
 
     localStorage.removeItem('token');
     localStorage.removeItem('userId');
     localStorage.removeItem('username'); 
+    localStorage.removeItem('notificationStatus'); 
+
   };
 
   getIsAuthenticated = () => {
@@ -64,18 +71,30 @@ class AuthManager {
   getUsername = () => {
     return this.username; 
   };
+  getNotificationStatus = () => {
+    return this.notificationStatus;
+  };
+  setNotificationStatus = (status) => {
+    this.notificationStatus = status;
+    localStorage.setItem('notificationStatus', status);
+
+  };
 
   refresh = () => {
     console.log("AuthManager: refresh")
     const token = localStorage.getItem('token');
     const userId = localStorage.getItem('userId');
     const username = localStorage.getItem('username'); 
+    const notificationStatus = localStorage.getItem('notificationStatus'); 
 
     if (token && userId) {
       this.isAuthenticated = true;
       this.authToken = token;
       this.userId = userId;
       this.username = username;
+      this.notificationStatus = notificationStatus;
+
+      
     }
   }
 
