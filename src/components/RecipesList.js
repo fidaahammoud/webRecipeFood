@@ -5,6 +5,7 @@ import { faThumbsUp, faSort, faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Modal from './Modal';
 import { Utils } from './Utils';
+import verificationIcon from "../images/Verification-Logo.png";
 
 function RecipesList({ recipes, setSortingCriteria }) {
   const API_HOST = process.env.REACT_APP_API_URL;
@@ -54,7 +55,15 @@ function RecipesList({ recipes, setSortingCriteria }) {
               <Link to={`/chefs/${recipe.user.id}`} className={classes.creatorLink}>
                 <div className={classes.creatorContainer}>
                   <img src={`${API_HOST}/storage/${recipe.user.images.image}`} alt={recipe.user.name} className={classes.creatorImage} />
-                  <span className={classes.creatorName}>{recipe.user.name}</span>
+                  <div className={classes.chefName}>{recipe.user.name}
+                    {recipe.user.isVerified === 1 && (
+                    <img
+                      src={verificationIcon}
+                      alt="Verified"
+                      className={classes.verificationLogo}
+                    />
+                  )}
+                  </div>
                 </div>
               </Link>
               <Link to={`/recipes/${recipe.id}`} className={classes.recipeLink}>

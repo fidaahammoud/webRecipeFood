@@ -3,6 +3,9 @@ import { Form, NavLink } from 'react-router-dom';
 import SearchBar from './SearchBar'; 
 import authManagerInstance from '../components/AuthManager';
 import classes from '../css/MainNavigation.module.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBell ,faUser,faUpload  } from '@fortawesome/free-solid-svg-icons';
+
 
 function MainNavigation() {
   const isAuthenticated = authManagerInstance.getIsAuthenticated();
@@ -78,30 +81,8 @@ function MainNavigation() {
               </NavLink>
             </li>
           )}
-          {isAuthenticated && haveUsername && ( 
-            <li>
-              <NavLink
-                to="/profile"
-                className={({ isActive }) =>
-                  isActive ? classes.active : undefined
-                }
-              >
-                Profile
-              </NavLink>
-            </li>
-          )}
-          {isAuthenticated && haveUsername && ( 
-            <li>
-              <NavLink
-                to="/addRecipe"
-                className={({ isActive }) =>
-                  isActive ? classes.active : undefined
-                }
-              >
-                Add Recipe
-              </NavLink>
-            </li>
-          )}
+         
+         
 
           {isAuthenticated && haveUsername && ( 
             <li>
@@ -111,7 +92,7 @@ function MainNavigation() {
                   isActive ? classes.active : undefined
                 }
               >
-               View Followings
+                Followings
               </NavLink>
             </li>
           )}
@@ -119,12 +100,39 @@ function MainNavigation() {
           {isAuthenticated && haveUsername && ( 
             <li>
               <NavLink
+                to="/addRecipe"
+                className={({ isActive }) =>
+                  isActive ? classes.active : undefined
+                }
+              >
+                <FontAwesomeIcon icon={faUpload} className={classes.icon}  /> 
+              </NavLink>
+            </li>
+          )}
+
+            {isAuthenticated && haveUsername && ( 
+              <li>
+                <NavLink
+                  to="/profile"
+                  className={({ isActive }) =>
+                    isActive ? classes.active : undefined
+                  }
+                >
+                  <FontAwesomeIcon icon={faUser} className={classes.icon} /> 
+                </NavLink>
+              </li>
+            )}
+
+
+            {isAuthenticated && haveUsername && ( 
+            <li>
+              <NavLink
                 to="/notifications"
                 className={({ isActive }) =>
                   isActive ? classes.active : undefined
                 }
               >
-               Check Notifications
+                <FontAwesomeIcon icon={faBell} className={classes.icon} /> 
               </NavLink>
             </li>
           )}

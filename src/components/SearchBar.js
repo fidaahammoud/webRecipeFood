@@ -18,15 +18,19 @@ function SearchBar() {
 
   return (
     <div className={classes.search}>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Search for recipes..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className={classes.searchInput}
-        />
-        <FontAwesomeIcon icon={faSearch} className={classes.searchIcon} onClick={handleSubmit} />
+      <form onSubmit={handleSubmit} className={classes.searchForm}>
+        <div className={classes.searchContainer}>
+          <input
+            type="text"
+            placeholder="Search for recipes..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className={classes.searchInput}
+          />
+          <button type="submit" className={classes.searchButton}>
+            <FontAwesomeIcon icon={faSearch} className={classes.searchIcon} />
+          </button>
+        </div>
       </form>
     </div>
   );

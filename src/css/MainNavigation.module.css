@@ -8,7 +8,7 @@
 
 .list {
   display: flex;
-  gap: 1rem;
+  gap: 1.5rem; 
 }
 
 .list a {
@@ -30,4 +30,18 @@
   transition: background-color 0.3s ease;
   background-color: #434039;
   color: white;
+}
+
+.iconLink {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; 
+}
+
+.icon {
+  font-size: 1.5rem; 
+}
+
+.largeIcon {
+  font-size: 2rem; 
 }
