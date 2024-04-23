@@ -13,6 +13,7 @@ function AdditionalDetailsForm({ onSubmit }) {
   return (
     <>
       <Form method='post' className={classes.form} onSubmit={handleSubmit}> 
+      <div className={classes.formBackground}>
         <h1>Provide Additional Details</h1>
         <p>
           <label htmlFor="username">Username</label>
@@ -29,6 +30,7 @@ function AdditionalDetailsForm({ onSubmit }) {
         <div className={classes.actions}>
           <Link to="/auth">Back to Login</Link>
           <button type="submit">Register</button>
+        </div>
         </div>
       </Form>
     </>

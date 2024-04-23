@@ -56,9 +56,15 @@ function AddRecipeFormPage({ onSubmit, ingredients, steps }) {
     onSubmit(formData, localSteps); 
   };
 
+  const handleReset = () => {
+    setLocalIngredients([{ name: '', unit: '' }]);
+    setLocalSteps(['']);
+  };
+
   return (
     <>
-      <Form method='post' className={classes.form} onSubmit={handleSubmit}>
+      <Form method='post' className={classes.form} onSubmit={handleSubmit} onReset={handleReset}>
+      <div className={classes.formBackground}>
         <h1>Provide Recipe Details</h1>
         <div>
           <label htmlFor="title">Title</label>
@@ -143,7 +149,8 @@ function AddRecipeFormPage({ onSubmit, ingredients, steps }) {
         
         <div className={classes.actions}>
           <button type="submit">Save</button>
-          <button type="button">Cancel</button>
+          <button type="reset">Cancel</button>
+        </div>
         </div>
       </Form>
     </>

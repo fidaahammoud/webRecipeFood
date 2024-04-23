@@ -4,6 +4,11 @@
     margin: 0 auto;
     padding: 20px;
   }
+  .formBackground {
+    background-color: #716f6b;
+    padding: 2rem;
+    border-radius: 8px;
+  }
   
   .form h1 {
     font-size: 24px;
@@ -41,19 +46,19 @@
   }
   
   .form .inputRow button {
-    margin-left: 10px; /* Adjust margin between buttons */
+    margin-left: 10px; 
   }
   
   .form .actions button {
-    margin-left: 10px; /* Adjust margin between buttons */
+    margin-left: 10px; 
   }
   
   .form button {
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
-    background-color: #6a6e72;
-    color: #fff;
+    background-color: #434039;
+    color: white;
     cursor: pointer;
   }
   

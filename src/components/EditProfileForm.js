@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from 'react';
-import { Form, Link } from 'react-router-dom'; 
+import { Form, useNavigate  } from 'react-router-dom'; 
 import classes from '../css/AdditionalDetailsForm.module.css';
 import authManagerInstance from '../components/AuthManager';
 import HttpService from '../components/HttpService';
@@ -11,6 +11,7 @@ function EditProfileForm({ onSubmit }) {
   const [imageId, setImageId] = useState('');
 
   const httpService = new HttpService();
+  const navigate = useNavigate();
 
 
   useEffect(() => {
@@ -46,10 +47,15 @@ const fetchProfileDetails = async () => {
     const formData = new FormData(form); 
     onSubmit(formData,imageId);
   };
+  
+  const handleCancel = () => {
+    navigate('/profile'); 
+  };
 
   return (
     <>
       <Form method='post' className={classes.form} onSubmit={handleSubmit}> 
+      <div className={classes.formBackground}>
         <h1>Edit profile details</h1>
         <p>
           <label htmlFor="username">Username</label>
@@ -71,6 +77,8 @@ const fetchProfileDetails = async () => {
         </p>
         <div className={classes.actions}>
           <button type="submit">Done</button>
+          <button type="button" onClick={handleCancel}>Cancel</button>
+        </div>
         </div>
       </Form>
     </>

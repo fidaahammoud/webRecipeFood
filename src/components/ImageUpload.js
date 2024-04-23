@@ -51,8 +51,8 @@ const UploadImageToDB = ({ onImageUpload }) => {
   return (
     <div className={classes.uploadContainer}>
       <div className={classes.inputContainer}>
-        <input type="file" name="image" ref={imageRef} onChange={fileSelectHandler} />
-        <button onClick={handleSubmit}>Submit image</button>
+        <input type="file" name="image" ref={imageRef} onChange={fileSelectHandler} className={classes.fileInput} />
+        {image && <button onClick={handleSubmit} className={classes.submitButton}>Submit image</button>}
       </div>
       {imagePreview && (
         <div className={classes.imagePreviewContainer}>

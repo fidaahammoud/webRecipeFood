@@ -99,10 +99,14 @@ function EditRecipeFormPage({ onSubmit }) {
         const formData = new FormData(form);
         onSubmit(formData, localSteps,localIngredients,imageId);
     };
+    const handleCancel = () => {
+        navigate('/profile'); 
+      };
 
     return (
         <>
             <Form method='post' className={classes.form} onSubmit={handleSubmit}>
+            <div className={classes.formBackground}>
                 <h1>Edit Recipe</h1>
                 <div>
                     <label htmlFor="title">Title</label>
@@ -220,7 +224,8 @@ function EditRecipeFormPage({ onSubmit }) {
                 ))}
                 <div className={classes.actions}>
                     <button type="submit">Save</button>
-                    <button type="button">Cancel</button>
+                    <button type="button" onClick={handleCancel}>Cancel</button>
+                </div>
                 </div>
             </Form>
         </>
