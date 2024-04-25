@@ -53,7 +53,6 @@ function AddRecipeDeatilsPage() {
       const url = `${API_HOST}/api/recipes`;
 
       const response = await httpService.post(url, recipeData, token);
-
       if(response.message === 'success'){
           setToastMessage("Recipe added successfully !");
           setToastType('success');
@@ -67,19 +66,7 @@ function AddRecipeDeatilsPage() {
         setToastType('error');
         setShowToast(true);
       }
-      //console.log(response.message);
-
-      // if (response && response.message === 'success' ) {
-      //   setToastMessage('Recipe added successfully');
-      //   setToastType('success');
-      //   setShowToast(true);
-      //   setTimeout(navigateToHome, 2000);
-      // }
-      // else{
-      //   setToastMessage(response.message);
-      //   setToastType('error');
-      //   setShowToast(true);
-      // }
+     
 
     } catch (error) {
       console.error('Error adding a recipe:', error);

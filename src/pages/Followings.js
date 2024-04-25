@@ -33,8 +33,12 @@ async function loadChefs() {
   return response;
 }
 
-export function loader() {
+export async function loader() {
+  const [chefs] = await Promise.all([
+    loadChefs(),
+    
+  ]);
   return defer({
-    chefs: loadChefs(), 
+    chefs,
   });
 }

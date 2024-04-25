@@ -67,7 +67,7 @@ function RecipeItem({ recipe }) {
 
   useEffect(() => {
     displayEditAndDelete();
-  }, [recipe]);
+  }, [recipe,token,userId]);
 
   const displayEditAndDelete = () => {
     if (loggedInUser === recipe.user.id) {

@@ -36,7 +36,48 @@ import DietarydDetailPage, { loader as dietaryDetailsLoader } from './pages/Diet
 
 
 import authManagerInstance from './components/AuthManager';
-const isAuthenticated = authManagerInstance.getIsAuthenticated();
+const AddRecipeGuarded = () => {
+  const isAuthenticated = authManagerInstance.getIsAuthenticated();
+
+  if (!isAuthenticated) {
+    return <AuthenticationPage />;
+  }
+
+  return <AddRecipeDeatilsPage />;
+};
+
+const CompleteAuthGuarded = () => {
+  const isAuthenticated = authManagerInstance.getIsAuthenticated();
+
+  if (!isAuthenticated) {
+    return <AuthenticationPage />;
+  }
+
+  return <CompleteAuthPage />;
+};
+
+const EditProfileGuarded = () => {
+  const isAuthenticated = authManagerInstance.getIsAuthenticated();
+
+  if (!isAuthenticated) {
+    return <AuthenticationPage />;
+  }
+
+  return <EditProfilePage />;
+};
+
+
+
+
+const EditRecipeGuarded = () => {
+  const isAuthenticated = authManagerInstance.getIsAuthenticated();
+
+  if (!isAuthenticated) {
+    return <AuthenticationPage />;
+  }
+
+  return <EditRecipeDetailsPage />;
+};
 
 const router = createBrowserRouter([
   {
@@ -116,7 +157,10 @@ const router = createBrowserRouter([
       },
       {
         path: 'auth/additional-details',
-        element: <CompleteAuthPage />,
+        //element: <CompleteAuthPage />,
+        
+        element: <CompleteAuthGuarded />,
+
       },
 
       {
@@ -128,19 +172,27 @@ const router = createBrowserRouter([
 
       {
         path: 'addRecipe',
-        element: <AddRecipeDeatilsPage/>,
+       // element: <AddRecipeDeatilsPage/>,
+        
+        element: <AddRecipeGuarded/>,
+
       },
       {
         path: 'editRecipe/:recipeId',
         id: 'edit-recipe',
-        element: <EditRecipeDetailsPage/>,
+       // element: <EditRecipeDetailsPage/>,
+        
+        element: <EditRecipeGuarded/>,
+
       },
 
 
       {
         path: 'editProfile/:userId',
         id: 'edit-profile',
-        element: <EditProfilePage/>,
+       // element: <EditProfilePage/>,
+       element: <EditProfileGuarded/>,
+
       },
 
       {
@@ -153,6 +205,7 @@ const router = createBrowserRouter([
 
       {
         path: 'notifications',
+        id: 'my_notifications',
         element: <NotificationsPage />,
         loader: notificationsLoader,
       },
@@ -182,6 +235,8 @@ const router = createBrowserRouter([
     ],
   },
 ]);
+
+
 
 const App = () => {
   useEffect(() => {

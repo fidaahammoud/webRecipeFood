@@ -41,7 +41,7 @@ function NotificationsList({ notifications }) {
 
   useEffect(() => {
     const intervalId = setInterval(async () => {
-      const response = await httpService.get(`${API_HOST}/api/notifications`, token);
+      const response = await httpService.get(`${API_HOST}/api/notifications/${userId}`, token);
       const newNotifications = response.notifications.map(notification => ({
         ...notification,
         isRead: notification.isRead
@@ -60,8 +60,8 @@ function NotificationsList({ notifications }) {
       <div className={classes.switcherContainer}>
        
         <Switch 
-          trackColor={{ false: "#767577", true: "#81b0ff" }}
-          thumbColor={isNotificationEnabled ? "#f5dd4b" : "#f4f3f4"}
+          trackcolor ={{ false: "#767577", true: "#81b0ff" }}
+          thumbcolor={isNotificationEnabled ? "#f5dd4b" : "#f4f3f4"}
           onChange={toggleNotification}
           checked={isNotificationEnabled}
         />
