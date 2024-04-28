@@ -53,7 +53,7 @@ function AddRecipeFormPage({ onSubmit, ingredients, steps }) {
     event.preventDefault(); 
     const form = event.target; 
     const formData = new FormData(form); 
-    onSubmit(formData, localSteps); 
+    onSubmit(formData, localSteps,localIngredients); 
   };
 
   const handleReset = () => {

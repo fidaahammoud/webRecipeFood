@@ -81,7 +81,7 @@ function MainNavigation() {
                   isActive ? classes.active : undefined
                 }
               >
-                Authorization
+                Authentication
               </NavLink>
             </li>
           )}

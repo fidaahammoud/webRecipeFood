@@ -24,7 +24,7 @@ function AddRecipeDeatilsPage() {
 
   const navigate = useNavigate(); 
   
-  const handleSubmit = async (formData,steps) => {
+  const handleSubmit = async (formData,steps,ingredients) => {
     const token = authManagerInstance.getAuthToken();;
     const userId = authManagerInstance.getUserId();
     console.log("token : " + token);
