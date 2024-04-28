@@ -5,7 +5,7 @@ import authManagerInstance from '../components/AuthManager';
 import classes from '../css/MainNavigation.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell ,faUser,faUpload  } from '@fortawesome/free-solid-svg-icons';
-import logo from "../images/logo.jpeg";
+import HeaderLogo from './HeaderLogo'; 
 
 
 function MainNavigation() {
@@ -14,11 +14,11 @@ function MainNavigation() {
 
   return (
     <header className={classes.header}>
-       {/* <NavLink to="/">
-        <img src={logo} alt="Logo" className={classes.logo} />
-      </NavLink> */}
       <nav>
         <ul className={classes.list}>
+        <li>
+            <HeaderLogo />
+          </li>
           <li>
             <NavLink
               to="/"

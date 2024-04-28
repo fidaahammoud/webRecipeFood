@@ -1,35 +1,49 @@
 .header {
-  max-width: 60rem;
-  margin: auto;
-  padding: 2rem;
+  max-width: 100%;
+  padding: 1rem 2rem;
   display: flex;
+  align-items: center;
   justify-content: space-between;
+  background-color: #242424;
+  box-shadow: 0 2px 4px rgba(225, 195, 195, 0.1); 
+}
+
+.logo {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
 }
 
 .list {
   display: flex;
-  gap: 1.5rem; 
+  gap: 2rem;
 }
 
 .list a {
   text-decoration: none;
-  color: var(--color-primary-400);
+  color: #ffffff; 
+  transition: color 0.3s ease; 
+  font-size: 1.0rem; 
+
 }
 
 .list a:hover,
 .list a.active {
-  color: var(--color-primary-800);
+  color: #7f8791; 
 }
 
 .logoutButton {
-  margin-right: 10px;
-  padding: 10px 20px;
+  padding: 8px 16px;
   border: none;
-  border-radius: 5px;
+  border-radius: 4px;
+  background-color: #434039;
+  color: #ffffff;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  background-color: #434039;
-  color: white;
+}
+
+.logoutButton:hover {
+  background-color: #494646; 
 }
 
 .iconLink {
