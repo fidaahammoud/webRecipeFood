@@ -16,7 +16,7 @@
   transition: transform 0.3s ease;
   display: block;
   width: 250px;
-  position: relative; /* Add this to position the verification icon */
+  position: relative; 
 }
 
 .chef:hover {
@@ -24,8 +24,8 @@
 }
 
 .chefImage {
-  width: 200px;
-  height: 200px;
+  width: 250px;
+  height: 250px;
   border-radius: 50%;
   object-fit: cover;
   margin: 0 auto 10px;

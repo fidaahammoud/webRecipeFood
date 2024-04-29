@@ -65,9 +65,8 @@ function CompleteAuthPage() {
 
   return (
     <>
-      
-      <AdditionalDetailsForm onSubmit={handleSubmit} />
       <UploadImageToDB onImageUpload={handleImageUpload} />
+      <AdditionalDetailsForm onSubmit={handleSubmit} />
       {showToast && (
         <Toast message={toastMessage} type={toastType} />
       )}

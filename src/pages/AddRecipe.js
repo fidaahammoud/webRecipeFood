@@ -83,6 +83,7 @@ function AddRecipeDeatilsPage() {
 
   return (
     <>
+      <UploadImageToDB onImageUpload={handleImageUpload} />
       <AddRecipeFormPage
         onSubmit={handleSubmit}
         ingredients={ingredients}
@@ -91,7 +92,7 @@ function AddRecipeDeatilsPage() {
         
         setSteps={setSteps}
       />
-      <UploadImageToDB onImageUpload={handleImageUpload} />
+    
 
       {showToast && (
       <Toast message={toastMessage} type={toastType} />

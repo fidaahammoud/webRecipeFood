@@ -144,10 +144,22 @@
   margin-left: 10px;
 }
 
-.commentForm{
+.commentForm {
+  display: flex;
+  align-items: center; 
   margin-left: 70px;
-
 }
+
+.commentInput {
+  flex: 1; 
+  width: 100%; 
+  padding: 10px; 
+  border: 1px solid #ccc; 
+  border-radius: 5px;
+  font-size: 1rem; 
+}
+
+
 
 .favoriteStatus {
   margin-left: 10px;

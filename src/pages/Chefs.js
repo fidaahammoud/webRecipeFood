@@ -27,7 +27,7 @@ async function loadChefs() {
   const url = `${API_HOST}/api/users`;
   
   const loggedInUserId = authManagerInstance.getUserId(); 
-
+  console.log(loggedInUserId+" loggedInUserId");
   const response = await httpService.get(url, null);
   const filteredChefs = response.data.filter(chef => chef.id !== loggedInUserId);
   return filteredChefs;

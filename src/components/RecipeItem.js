@@ -233,10 +233,9 @@ function RecipeItem({ recipe }) {
               onChange={handleCommentChange}
               className={classes.commentInput}
             />
-            <button type="submit" className={classes.commentButton}>
-              {/* send */}
-              <FontAwesomeIcon icon={faPaperPlane} onClick={handleCommentChange} color='grey' />
-            </button>
+            {/* <button type="submit" className={classes.commentButton}>
+              <FontAwesomeIcon icon={faPaperPlane} onClick={handleCommentChange} color='grey' className={classes.paperPlaneIcon} />
+            </button> */}
           </form>
           {error && <p className={classes.error}>{error}</p>}
       </div>
