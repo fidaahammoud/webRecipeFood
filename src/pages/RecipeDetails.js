@@ -42,7 +42,7 @@ async function loadRecipe(id) {
   console.log(response.creator_id);
   console.log(userId);
 
-  if(response.isActive === 1  || response.creator_id === userId){
+  if(response.isActive === 1  || response.creator_id === parseInt(userId)){
     return response;
   }
   else{

@@ -69,8 +69,9 @@ function RecipeItem({ recipe }) {
     displayEditAndDelete();
   }, [recipe,token,userId]);
 
+  
   const displayEditAndDelete = () => {
-    if (loggedInUser === recipe.user.id) {
+    if (parseInt(loggedInUser) === recipe.user.id) {
       return (
         <div className={classes.editDelete}>
           <Link to={`/editRecipe/${recipe.id}`} className={classes.creatorLink}>

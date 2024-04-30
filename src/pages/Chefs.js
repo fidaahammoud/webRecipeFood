@@ -29,7 +29,9 @@ async function loadChefs() {
   const loggedInUserId = authManagerInstance.getUserId(); 
   console.log(loggedInUserId+" loggedInUserId");
   const response = await httpService.get(url, null);
-  const filteredChefs = response.data.filter(chef => chef.id !== loggedInUserId);
+  const filteredChefs = response.data.filter(chef => chef.id !== parseInt(loggedInUserId));
+  console.log(filteredChefs);
+
   return filteredChefs;
 }
 
