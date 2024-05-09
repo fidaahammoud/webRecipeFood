@@ -3,7 +3,6 @@ import classes from '../css/NotificationList.module.css';
 import { Utils } from './Utils';
 import HttpService from '../components/HttpService';
 import authManagerInstance from '../components/AuthManager';
-import NotificationsPage, { loader } from '../pages/Notifications';
 import Switch from 'react-switch';
 
 function NotificationsList({ notifications }) {
@@ -81,6 +80,7 @@ function NotificationsList({ notifications }) {
                   {notification.content}
                 </p>
               </div>
+              <span className={classes.createdAt}>{getTimeDifference(notification.created_at)}</span>
               {index !== updatedNotifications.length - 1 && <div className={classes.horizontalLine} />}
             </button>
           ))}
