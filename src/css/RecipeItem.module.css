@@ -135,7 +135,10 @@
 .commentContent {
   text-transform: capitalize; 
   font-size: 0.8rem;
+  max-width: 450px; 
+  overflow-wrap: break-word; 
 }
+
 
 .createdAt {
   font-size: 12px;

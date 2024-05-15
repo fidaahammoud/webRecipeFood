@@ -1,5 +1,5 @@
-import React from 'react';
-import { Form, NavLink } from 'react-router-dom';
+import React, { useState,useEffect } from 'react';
+import { Form, NavLink, useLocation } from 'react-router-dom';
 import SearchBar from './SearchBar'; 
 import authManagerInstance from '../components/AuthManager';
 import classes from '../css/MainNavigation.module.css';
@@ -7,16 +7,23 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell ,faUser,faUpload  } from '@fortawesome/free-solid-svg-icons';
 import HeaderLogo from './HeaderLogo'; 
 
-
 function MainNavigation() {
   const isAuthenticated = authManagerInstance.getIsAuthenticated();
   const haveUsername = authManagerInstance.getUsername();
+  const location = useLocation();
 
+  const [searchTerm, setSearchTerm] = useState('');
+
+  useEffect(() => {
+    if (!location.pathname.startsWith('/search')) {
+      setSearchTerm('');
+    }
+  }, [location.pathname]);
   return (
     <header className={classes.header}>
       <nav>
         <ul className={classes.list}>
-        <li>
+          <li>
             <HeaderLogo />
           </li>
           <li>
@@ -60,8 +67,6 @@ function MainNavigation() {
               Categories
             </NavLink>
           </li>
-
-
           <li>
             <NavLink
               to="/dietaries"
@@ -72,7 +77,6 @@ function MainNavigation() {
               Dietaries
             </NavLink>
           </li>
-
           {(!isAuthenticated || (isAuthenticated && !haveUsername)) && (
             <li>
               <NavLink
@@ -85,9 +89,6 @@ function MainNavigation() {
               </NavLink>
             </li>
           )}
-         
-         
-
           {isAuthenticated && haveUsername && ( 
             <li>
               <NavLink
@@ -100,7 +101,6 @@ function MainNavigation() {
               </NavLink>
             </li>
           )}
-
           {isAuthenticated && haveUsername && ( 
             <li>
               <NavLink
@@ -113,22 +113,19 @@ function MainNavigation() {
               </NavLink>
             </li>
           )}
-
-            {isAuthenticated && haveUsername && ( 
-              <li>
-                <NavLink
-                  to="/profile"
-                  className={({ isActive }) =>
-                    isActive ? classes.active : undefined
-                  }
-                >
-                  <FontAwesomeIcon icon={faUser} className={classes.icon} /> 
-                </NavLink>
-              </li>
-            )}
-
-
-            {isAuthenticated && haveUsername && ( 
+          {isAuthenticated && haveUsername && ( 
+            <li>
+              <NavLink
+                to="/profile"
+                className={({ isActive }) =>
+                  isActive ? classes.active : undefined
+                }
+              >
+                <FontAwesomeIcon icon={faUser} className={classes.icon} /> 
+              </NavLink>
+            </li>
+          )}
+          {isAuthenticated && haveUsername && ( 
             <li>
               <NavLink
                 to="/notifications"
@@ -140,8 +137,6 @@ function MainNavigation() {
               </NavLink>
             </li>
           )}
-
-
           {isAuthenticated && haveUsername && (
             <li>
               <Form action="/logout" method="post">
@@ -149,9 +144,8 @@ function MainNavigation() {
               </Form>
             </li>
           )}
-          
           <li>
-            <SearchBar />
+            <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
           </li>
         </ul>
       </nav>

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Form, Link } from 'react-router-dom'; 
+import React, { useState } from 'react';
+import { Form, useNavigate  } from 'react-router-dom'; 
 import classes from '../css/AddRecipeForm.module.css';
 import CategoryFetcher from './CategoryFetcher';
 import DietaryFetcher from './DietaryFetcher';
@@ -7,6 +7,7 @@ import DietaryFetcher from './DietaryFetcher';
 function AddRecipeFormPage({ onSubmit, ingredients, steps }) { 
   const [localIngredients, setLocalIngredients] = useState(ingredients || [{ name: '', unit: '' }]);
   const [localSteps, setLocalSteps] = useState(steps || ['']);
+  const navigate = useNavigate();
 
   const handleIngredientChange = (index, event) => {
     const { name, value } = event.target;
@@ -59,6 +60,10 @@ function AddRecipeFormPage({ onSubmit, ingredients, steps }) {
   const handleReset = () => {
     setLocalIngredients([{ name: '', unit: '' }]);
     setLocalSteps(['']);
+  };
+
+  const handleCancel = () => {
+    navigate('/profile'); 
   };
 
   return (
@@ -149,7 +154,7 @@ function AddRecipeFormPage({ onSubmit, ingredients, steps }) {
         
         <div className={classes.actions}>
           <button type="submit">Save</button>
-          <button type="reset">Cancel</button>
+          <button type="reset" onClick={handleCancel}>Cancel</button>
         </div>
         </div>
       </Form>

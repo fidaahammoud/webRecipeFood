@@ -1,12 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
 import classes from '../css/SearchBar.module.css';
 
-function SearchBar() {
-  const [searchTerm, setSearchTerm] = useState('');
+function SearchBar({ searchTerm, setSearchTerm }) {
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {

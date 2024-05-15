@@ -28,7 +28,6 @@ function AdditionalDetailsForm({ onSubmit }) {
           <input id="bio" type="text" name="bio"  />
         </p>
         <div className={classes.actions}>
-          <Link to="/auth">Back to Login</Link>
           <button type="submit">Register</button>
         </div>
         </div>
