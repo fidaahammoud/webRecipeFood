@@ -158,7 +158,7 @@ function RecipeItem({ recipe }) {
       const formattedRating = parseFloat(response.avgRating).toFixed(1);
       console.log("Formatted rating:", formattedRating);
       setAverageRating(formattedRating);
-      setUserRate(rating);  // Update userRate with the selected rating
+      setUserRate(rating); 
     } catch (error) {
       console.log(error.message);
     }
@@ -275,7 +275,7 @@ function RecipeItem({ recipe }) {
         {/* Ingredients */}
         <div className={classes.sectionHeader}>
           <h2 className={classes.title}>Ingredients</h2>
-          <FontAwesomeIcon icon={showIngredients ? faAngleUp : faAngleDown} onClick={toggleIngredients} />
+          <FontAwesomeIcon icon={showIngredients ? faAngleUp : faAngleDown} onClick={toggleIngredients} className={classes.showStepsAndIngredients}/>
         </div>
         {showIngredients && (
           <ol>
@@ -287,7 +287,7 @@ function RecipeItem({ recipe }) {
         {/* Steps */}
         <div className={classes.sectionHeader}>
           <h2 className={classes.title}>Steps</h2>
-          <FontAwesomeIcon icon={showSteps ? faAngleUp : faAngleDown} onClick={toggleSteps} />
+          <FontAwesomeIcon icon={showSteps ? faAngleUp : faAngleDown} onClick={toggleSteps} className={classes.showStepsAndIngredients} />
         </div>
         {showSteps && (
           <ol>
