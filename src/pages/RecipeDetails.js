@@ -46,7 +46,7 @@ async function loadRecipe(id) {
     return response;
   }
   else{
-    throw json({ message: 'Something went wrong!' }, { status: 500 });
+    throw json({ message: 'Recipe not active!' }, { status: 500 });
   }
 
 }
