@@ -89,6 +89,8 @@ function EditRecipeDetailsPage() {
 
     return (
         <>
+            <UploadImageToDB onImageUpload={handleImageUpload} />
+
             <EditRecipeFormPage
                  onSubmit={handleSubmit}
                  ingredients={ingredients}
@@ -97,7 +99,6 @@ function EditRecipeDetailsPage() {
                  setSteps={setSteps}
                  imageId={imageId}  
             />
-            <UploadImageToDB onImageUpload={handleImageUpload} />
 
             {showToast && (
       <Toast message={toastMessage} type={toastType} />

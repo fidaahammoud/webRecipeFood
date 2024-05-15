@@ -1,7 +1,7 @@
 import React, { useState,useEffect } from 'react';
 import { Link,useParams  } from 'react-router-dom';
 import classes from '../css/RecipesList.module.css';
-import { faThumbsUp , faSearch} from '@fortawesome/free-solid-svg-icons'; 
+import { faThumbsUp , faStar} from '@fortawesome/free-solid-svg-icons'; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { Utils } from './Utils'; 
@@ -52,6 +52,7 @@ function SearchedRecipes({ recipes }) {
 
                   <div className={classes.ratingContainer}>
                     <i className={`fa fa-star ${classes.ratingIcon}`} />
+                    <FontAwesomeIcon icon={faStar} color={'gold'} className={classes.rateIcon} />
                     <span className={classes.ratingText}>{recipe.avrgRating}</span>
                   </div>
                 </div>
