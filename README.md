@@ -2,10 +2,10 @@
 
 Welcome to our **Recipe Sharing Platform**, a web application designed to bring culinary enthusiasts together! Share your favorite recipes, discover new ones, and interact with fellow food lovers.
 
-![Recipe Sharing Platform Home Page](src\images\homepageImage.png)
+![Recipe Sharing Platform Home Page](src/images/homepageImage.png)
 
 
-![Recipe Sharing Platform Recipes page](src\images\recipes.png)
+![Recipe Sharing Platform Recipes page](src/images/recipes.png)
 
 ## 🌟 Features
 
@@ -64,4 +64,4 @@ The page will reload if you make edits.
 ```markdown
 ## 📚 Learn More
 
-For more information about using React, check out the [React documentation](https://reactjs.org/).
+For more information about using React, check out the  [React documentation](https://reactjs.org) 
